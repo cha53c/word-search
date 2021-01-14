@@ -15,9 +15,12 @@ const PlayNumber = props => (
 
 function App() {
     const numbers = 9;
+    const words = ['159'];
     const [stars, setStars] = useState(utils.random(1, 9));
     const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
     const [candidateNums, setCandidateNums] = useState([]);
+    const [candidateLetters, setCandidateLetters] = useState([]);
+    const [wordFound, setWordFound] = useState(false);
 
     const candidatesAreWrong = utils.sum(candidateNums) > stars;
 
@@ -35,14 +38,36 @@ function App() {
             setStars(8); // in word search this will update list of words found or I could remove a star for each word found
             setCandidateNums([]);
         }
-    }
+    };
+
+    const onLetterClick = (letter, currentStatus) => {
+        console.log('on click candidate Letters ', candidateLetters);
+        setCandidateNums ([1]);
+        if(candidateLetters.includes(letter)){
+            candidateLetters.pop(letter);
+        } else {
+            candidateLetters.push(letter);
+        }
+        setCandidateLetters(candidateLetters);
+        if(JSON.stringify(candidateLetters) === JSON.stringify([1,5,9])){
+            // this is a winning sequence. How do I change the colour of the numbers
+            console.log('you got a match')
+            setWordFound(true);
+        }
+    };
 
     const numberStatus = (number) => {
-        if (!availableNums.includes(number)) {
-            return 'used';
+        // TODO if candidate, but not work calour red
+        // TODO if candidate completes word colour whole word green
+        // console.log('candidate letters', candidateLetters);
+        // console.log('number', number);
+        const included = candidateLetters.includes(number);
+        if(included && wordFound) {
+            return 'candidate';
         }
-        if (candidateNums.includes(number)) {
-            return candidatesAreWrong ? 'wrong' : 'candidate';
+        if(included){
+            // TODO check if word is found
+            return 'wrong';
         }
         return 'available'
     }
@@ -63,7 +88,8 @@ function App() {
                         <PlayNumber key={number}
                                     number={number}
                                     status={numberStatus(number)}
-                                    onClick={onNumberClick}
+                                   // onClick={onNumberClick}
+                                    onClick={onLetterClick}
                         />
                     )}
                 </div>

@@ -9,18 +9,25 @@ const StarsDisplay = props => (
 const PlayNumber = props => (
     <button className="number"
             style={{backgroundColor: colors[props.status]}}
-            onClick={() => props.onClick(props.number, props.status)}>{props.number}</button>
+            onClick={() => props.onClick(props.id, props.status)}>{props.letter}</button>
 );
 
 
 function App() {
     const numbers = 9;
-    const words = ['159'];
+     const words = [1,5,9];
+     const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'G'];
+    const letters =  ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'G'];
+    const ids = utils.range(1, numbers);
+
+
+
     const [stars, setStars] = useState(utils.random(1, 9));
     const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
     const [candidateNums, setCandidateNums] = useState([]);
     const [candidateLetters, setCandidateLetters] = useState([]);
     const [wordFound, setWordFound] = useState(false);
+
 
     const candidatesAreWrong = utils.sum(candidateNums) > stars;
 
@@ -40,18 +47,20 @@ function App() {
         }
     };
 
-    const onLetterClick = (letter, currentStatus) => {
+    const onLetterClick = (id, currentStatus) => {
+        console.log('id ', id);
         console.log('on click candidate Letters ', candidateLetters);
-        setCandidateNums ([1]);
-        if(candidateLetters.includes(letter)){
-            candidateLetters.pop(letter);
+        setCandidateNums ([1]); // TODO should not need this to force re-render
+        if(candidateLetters.includes(id)){
+            candidateLetters.pop(id);
         } else {
-            candidateLetters.push(letter);
+            candidateLetters.push(id);
         }
+        console.log('after click candidate letters', candidateLetters)
         setCandidateLetters(candidateLetters);
         if(JSON.stringify(candidateLetters) === JSON.stringify([1,5,9])){
             // this is a winning sequence. How do I change the colour of the numbers
-            console.log('you got a match')
+            console.log('you got a match');
             setWordFound(true);
         }
     };
@@ -83,12 +92,12 @@ function App() {
                     {/*  <StarsDisplay count={stars}/>*/}
                 </div>
                 <div className="right">
-                    {utils.range(1, numbers).map(number =>
+                    {grid.map((letter, index) =>
                         // <button key={number} className="number">{number}</button>
-                        <PlayNumber key={number}
-                                    number={number}
-                                    status={numberStatus(number)}
-                                   // onClick={onNumberClick}
+                        <PlayNumber key={index}
+                                    letter={letter}
+                                    id={index}
+                                    status={numberStatus(letter)}
                                     onClick={onLetterClick}
                         />
                     )}

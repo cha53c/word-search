@@ -14,6 +14,10 @@ const PlayNumber = props => (
 
 
 function App() {
+    const MATCHED = 'matched';
+    const CANDIDATE = 'candidate';
+    const AVAILABLE = 'available';
+
     const numbers = 9;
      const words = [1,5,9];
      const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'G'];
@@ -26,8 +30,7 @@ function App() {
     const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
     const [candidateNums, setCandidateNums] = useState([]);
     const [candidateLetters, setCandidateLetters] = useState([]);
-    const [wordFound, setWordFound] = useState(false);
-
+    const [matchedLetters, setMatchedLetters] = useState([]);
 
     const candidatesAreWrong = utils.sum(candidateNums) > stars;
 
@@ -56,29 +59,43 @@ function App() {
         } else {
             candidateLetters.push(id);
         }
-        console.log('after click candidate letters', candidateLetters)
+        console.log('after click candidate letters', candidateLetters);
         setCandidateLetters(candidateLetters);
-        if(JSON.stringify(candidateLetters) === JSON.stringify([1,5,9])){
-            // this is a winning sequence. How do I change the colour of the numbers
-            console.log('you got a match');
-            setWordFound(true);
-        }
+// TODO detect matched words
+        detectMatches();
+//         if(JSON.stringify(candidateLetters) === JSON.stringify([0,1,2])){
+//             // this is a winning sequence. How do I change the colour of the numbers
+//             console.log('you got a match');
+//             const newMatchedLetters = matchedLetters.concat(candidateLetters);
+//             setMatchedLetters(newMatchedLetters);
+//             console.log('matchedLetters', newMatchedLetters);
+//             setCandidateLetters([]);
+//         }
     };
-
+ const detectMatches = () => {
+     if(JSON.stringify(candidateLetters) === JSON.stringify([0,1,2])){
+         // this is a winning sequence. How do I change the colour of the numbers
+         console.log('you got a match');
+         const newMatchedLetters = matchedLetters.concat(candidateLetters);
+         setMatchedLetters(newMatchedLetters);
+         console.log('matchedLetters', newMatchedLetters);
+         setCandidateLetters([]);
+     }
+ }
     const numberStatus = (number) => {
-        // TODO if candidate, but not work calour red
-        // TODO if candidate completes word colour whole word green
-        // console.log('candidate letters', candidateLetters);
-        // console.log('number', number);
-        const included = candidateLetters.includes(number);
-        if(included && wordFound) {
-            return 'candidate';
+
+        const candidate = candidateLetters.includes(number);
+        const matched = matchedLetters.includes(number);
+        if(matched && candidate ) {
+            return CANDIDATE;
         }
-        if(included){
-            // TODO check if word is found
-            return 'wrong';
+        if(matched && !candidate){
+            return MATCHED;
         }
-        return 'available'
+        if(!matched && candidate){
+            return CANDIDATE;
+        }
+        return AVAILABLE
     }
 
     return (
@@ -97,7 +114,7 @@ function App() {
                         <PlayNumber key={index}
                                     letter={letter}
                                     id={index}
-                                    status={numberStatus(letter)}
+                                    status={numberStatus(index)}
                                     onClick={onLetterClick}
                         />
                     )}
@@ -117,9 +134,8 @@ const utils = {
 // Color Theme
 const colors = {
     available: 'lightgray',
-    used: 'lightgreen',
-    wrong: 'lightcoral',
-    candidate: 'deepskyblue',
+    matched: 'lightgreen',
+    candidate: 'lightcoral',
 }
 
 export default App;

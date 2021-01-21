@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState} from 'react';
 import utils from "./utils/utils";
+import matching from "./utils/matching";
 
 const StarsDisplay = props => (
     <>
@@ -66,7 +67,7 @@ function App() {
     const detectMatches = () => {
         // TODO detect multiple matched words
         wordLocations.map( word => {
-            if (JSON.stringify(candidateLetters) === JSON.stringify(word)) {
+            if(matching.wordFound(word, candidateLetters)) {
                 // this is a winning sequence. How do I change the colour of the numbers
                 console.log('you got a match');
                 const newMatchedLetters = matchedLetters.concat(candidateLetters);

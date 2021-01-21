@@ -1,5 +1,6 @@
 import './App.css';
 import React, {useState} from 'react';
+import utils from "./utils/utils";
 
 const StarsDisplay = props => (
     <>
@@ -74,14 +75,6 @@ function App() {
                 setCandidateLetters([]);
             }
         });
-        // if (JSON.stringify(candidateLetters) === JSON.stringify([0, 1, 2])) {
-        //     // this is a winning sequence. How do I change the colour of the numbers
-        //     console.log('you got a match');
-        //     const newMatchedLetters = matchedLetters.concat(candidateLetters);
-        //     setMatchedLetters(newMatchedLetters);
-        //     console.log('matchedLetters', newMatchedLetters);
-        //     setCandidateLetters([]);
-        // }
     };
 
     const numberStatus = (number) => {
@@ -127,11 +120,11 @@ function App() {
     );
 }
 
-const utils = {
-    range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
-    random: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),
-    sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
-};
+// const utils = {
+//     range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
+//     random: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),
+//     sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
+// };
 
 // Color Theme
 const colors = {

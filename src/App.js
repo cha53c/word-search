@@ -19,19 +19,20 @@ function App() {
     const MATCHED = 'matched';
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
-
-    const numbers = 9;
+    // ids of words in the grid
     const wordLocations = [[0,1,2],[2,5,8]];
+    // letters in the grid, based on 3x3 grid
     const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'B'];
+    // letters selected when trying to find a word
+    const [candidateLetters, setCandidateLetters] = useState([]);
+    // contains the id of the letters for words found
+    const [matchedLetters, setMatchedLetters] = useState([]);
 
-
-
+    // TODO conts set up by original number game example remove once not needed
+    const numbers = 9;
     const [stars, setStars] = useState(utils.random(1, 9));
     const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
     const [candidateNums, setCandidateNums] = useState([]);
-    const [candidateLetters, setCandidateLetters] = useState([]);
-    const [matchedLetters, setMatchedLetters] = useState([]);
-
     const candidatesAreWrong = utils.sum(candidateNums) > stars;
 
     const onNumberClick = (number, currentStatus) => {
@@ -54,6 +55,7 @@ function App() {
         console.log('id ', id);
         console.log('on click candidate Letters ', candidateLetters);
         setCandidateNums([1]); // TODO should not need this to force re-render
+        // toggle letter selection
         if (candidateLetters.includes(id)) {
             candidateLetters.pop(id);
         } else {

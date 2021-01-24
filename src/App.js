@@ -2,6 +2,8 @@ import './App.css';
 import React, {useState} from 'react';
 
 import GridLetter from "./components/GridLetter";
+import WordList from "./components/WordList";
+
 import utils from "./utils/utils";
 import matching from "./utils/matching";
 import gridSetup from "./utils/gridSetup";
@@ -88,7 +90,8 @@ function App() {
             </div>
             <div className="body">
                 <div className="left">
-                    {utils.range(1, stars).map(starId => <div key={starId} className="star"/>)}
+                    {/*{utils.range(1, stars).map(starId => <div key={starId} className="star"/>)} */}
+                    <WordList words={words}/>
                     {/*  <StarsDisplay count={stars}/>*/}
                 </div>
                 <div className="right">

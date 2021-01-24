@@ -1,17 +1,15 @@
 import './App.css';
 import React, {useState} from 'react';
+
+import PlayNumber from "./components/PlayNumber";
 import utils from "./utils/utils";
 import matching from "./utils/matching";
+
 
 const StarsDisplay = props => (
     <>
         {utils.range(1, props.count).map(starId => <div key={starId} className="star"/>)}
     </>
-);
-const PlayNumber = props => (
-    <button className="number"
-            style={{backgroundColor: colors[props.status]}}
-            onClick={() => props.onClick(props.id, props.status)}>{props.letter}</button>
 );
 
 
@@ -19,12 +17,12 @@ function App() {
     const MATCHED = 'matched';
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
-    // ids of words in the grid
+    // stores the location of the words in the grid by ids
     const wordLocations = [[0,1,2],[2,5,8]];
     // letters in the grid, based on 3x3 grid
     const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'B'];
     // letters selected when trying to find a word
-    const [candidateLetters, setCandidateLetters] = useState([]);
+    const [selectedLetters, setSelectedLetters] = useState([]);
     // contains the id of the letters for words found
     const [matchedLetters, setMatchedLetters] = useState([]);
 
@@ -33,56 +31,40 @@ function App() {
     const [stars, setStars] = useState(utils.random(1, 9));
     const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
     const [candidateNums, setCandidateNums] = useState([]);
-    const candidatesAreWrong = utils.sum(candidateNums) > stars;
 
-    const onNumberClick = (number, currentStatus) => {
-        if (currentStatus === 'used') {
-            return;
-        }
-        const newCandidateNums = currentStatus === 'available' ? candidateNums.concat(number) :
-            candidateNums.filter(cn => cn !== number);
-        if (utils.sum(newCandidateNums) !== stars) {
-            setCandidateNums(newCandidateNums)
-        } else {
-            const newAvailableNums = availableNums.filter(n => !newCandidateNums.includes(n));
-            setAvailableNums(newAvailableNums);
-            setStars(8); // in word search this will update list of words found or I could remove a star for each word found
-            setCandidateNums([]);
-        }
-    };
 
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
-        console.log('on click candidate Letters ', candidateLetters);
+        console.log('on click candidate Letters ', selectedLetters);
         setCandidateNums([1]); // TODO should not need this to force re-render
         // toggle letter selection
-        if (candidateLetters.includes(id)) {
-            candidateLetters.pop(id);
+        if (selectedLetters.includes(id)) {
+            selectedLetters.pop(id);
         } else {
-            candidateLetters.push(id);
+            selectedLetters.push(id);
         }
-        console.log('after click candidate letters', candidateLetters);
-        setCandidateLetters(candidateLetters);
+        console.log('after click candidate letters', selectedLetters);
+        setSelectedLetters(selectedLetters);
         detectMatches();
 
     };
     const detectMatches = () => {
         // TODO detect multiple matched words
         wordLocations.map( word => {
-            if(matching.wordFound(word, candidateLetters)) {
+            if(matching.wordFound(word, selectedLetters)) {
                 // this is a winning sequence. How do I change the colour of the numbers
                 console.log('you got a match');
-                const newMatchedLetters = matchedLetters.concat(candidateLetters);
+                const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);
                 console.log('matchedLetters', newMatchedLetters);
-                setCandidateLetters([]);
+                setSelectedLetters([]);
             }
         });
     };
 
     const numberStatus = (number) => {
 
-        const candidate = candidateLetters.includes(number);
+        const candidate = selectedLetters.includes(number);
         const matched = matchedLetters.includes(number);
         if (matched && candidate) {
             return CANDIDATE;
@@ -94,7 +76,7 @@ function App() {
             return CANDIDATE;
         }
         return AVAILABLE
-    }
+    };
 
     return (
         <div className="game">
@@ -121,19 +103,6 @@ function App() {
             <div className="timer">Time Remaining: 10</div>
         </div>
     );
-}
-
-// const utils = {
-//     range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
-//     random: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),
-//     sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
-// };
-
-// Color Theme
-const colors = {
-    available: 'lightgray',
-    matched: 'lightgreen',
-    candidate: 'lightcoral',
 }
 
 export default App;

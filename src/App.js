@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import PlayNumber from "./components/PlayNumber";
 import utils from "./utils/utils";
 import matching from "./utils/matching";
+import gridSetup from "./utils/gridSetup";
 
 
 const StarsDisplay = props => (
@@ -18,7 +19,8 @@ function App() {
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
     // stores the location of the words in the grid by ids
-    const wordLocations = [[0,1,2],[2,5,8]];
+    // const wordLocations = [[0,1,2],[2,5,8]];
+    const wordLocations = gridSetup.getWordLocations();
     // letters in the grid, based on 3x3 grid
     const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'B'];
     // letters selected when trying to find a word

@@ -7,7 +7,7 @@ const colors = {
     candidate: 'lightcoral',
 };
 
-const PlayNumber = props => (
+const GridLetter = props => (
     <button className="number"
             style={{backgroundColor: colors[props.status]}}
             onClick={() => props.onClick(props.id, props.status)}>{props.letter}</button>
@@ -15,4 +15,4 @@ const PlayNumber = props => (
 
 
 
-export default PlayNumber;
+export default GridLetter;

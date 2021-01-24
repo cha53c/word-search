@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useState} from 'react';
 
-import PlayNumber from "./components/PlayNumber";
+import GridLetter from "./components/GridLetter";
 import utils from "./utils/utils";
 import matching from "./utils/matching";
 import gridSetup from "./utils/gridSetup";
@@ -18,11 +18,12 @@ function App() {
     const MATCHED = 'matched';
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
+    const words = gridSetup.getWords();
     // stores the location of the words in the grid by ids
-    // const wordLocations = [[0,1,2],[2,5,8]];
     const wordLocations = gridSetup.getWordLocations();
     // letters in the grid, based on 3x3 grid
-    const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'B'];
+    const grid = gridSetup.getGrid();
+
     // letters selected when trying to find a word
     const [selectedLetters, setSelectedLetters] = useState([]);
     // contains the id of the letters for words found
@@ -93,7 +94,7 @@ function App() {
                 <div className="right">
                     {grid.map((letter, index) =>
                         // <button key={number} className="number">{number}</button>
-                        <PlayNumber key={index}
+                        <GridLetter key={index}
                                     letter={letter}
                                     id={index}
                                     status={numberStatus(index)}

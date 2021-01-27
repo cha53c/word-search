@@ -1,4 +1,4 @@
-import matching from '../src/utils/matching';
+import matching from './matching';
 const {expect}  = require('chai');
 
 

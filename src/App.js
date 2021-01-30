@@ -43,11 +43,12 @@ function App() {
         console.log('on click candidate Letters ', selectedLetters);
         setCandidateNums([1]); // TODO should not need this to force re-render
         // toggle letter selection
-        if (selectedLetters.includes(id)) {
-            selectedLetters.pop(id);
-        } else {
-            selectedLetters.push(id);
-        }
+        utils.toggleLetterSelection(id, selectedLetters);
+        // if (selectedLetters.includes(id)) {
+        //     selectedLetters.pop(id);
+        // } else {
+        //     selectedLetters.push(id);
+        // }
         console.log('after click candidate letters', selectedLetters);
         setSelectedLetters(selectedLetters);
         detectMatches();

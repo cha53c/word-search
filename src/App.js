@@ -42,23 +42,17 @@ function App() {
         console.log('id ', id);
         console.log('on click candidate Letters ', selectedLetters);
         setCandidateNums([1]); // TODO should not need this to force re-render
-        // toggle letter selection
-        utils.toggleLetterSelection(id, selectedLetters);
-        // if (selectedLetters.includes(id)) {
-        //     selectedLetters.pop(id);
-        // } else {
-        //     selectedLetters.push(id);
-        // }
-        console.log('after click candidate letters', selectedLetters);
-        setSelectedLetters(selectedLetters);
-        detectMatches();
-
+        const updatedSelection = (utils.toggleLetterSelection(id, selectedLetters));
+        console.log('after click candidate letters', updatedSelection);
+        setSelectedLetters(updatedSelection);
+        detectMatches(updatedSelection);
     };
-    const detectMatches = () => {
+
+    const detectMatches = (selectedLetters) => {
         // TODO detect multiple matched words
-        wordLocations.map( word => {
+        wordLocations.forEach( word => {
+            console.log('selection for matching', selectedLetters);
             if(matching.wordFound(word, selectedLetters)) {
-                // this is a winning sequence. How do I change the colour of the numbers
                 console.log('you got a match');
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);

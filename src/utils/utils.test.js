@@ -1,7 +1,7 @@
 import utils from './utils'
 
 describe('test letter  selection', () => {
-    it.only('should return new array', () => {
+    it('should return new array', () => {
         const selected = [1,2];
         const updated = utils.toggleLetterSelection(4, selected);
         expect(selected).not.toBe(updated);

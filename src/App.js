@@ -31,17 +31,9 @@ function App() {
     // contains the id of the letters for words found
     const [matchedLetters, setMatchedLetters] = useState([]);
 
-    // TODO conts set up by original number game example remove once not needed
-    // const numbers = 9;
-    // const [stars, setStars] = useState(utils.random(1, 9));
-    // const [availableNums, setAvailableNums] = useState(utils.range(1, 9));
-    // const [candidateNums, setCandidateNums] = useState([]);
-
-
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
         console.log('on click candidate Letters ', selectedLetters);
-        // setCandidateNums([1]); // TODO should not need this to force re-render
         const updatedSelection = (utils.toggleLetterSelection(id, selectedLetters));
         console.log('after click candidate letters', updatedSelection);
         setSelectedLetters(updatedSelection);

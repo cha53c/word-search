@@ -3,7 +3,7 @@ const utils = {
     random: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),
     sum: arr => arr.reduce((acc, curr) => acc + curr, 0),
     toggleLetterSelection: (id, selectedLetters) => {
-        let updatedSelection = selectedLetters
+        let updatedSelection = Array.from(selectedLetters);
         if (selectedLetters.includes(id)) {
             updatedSelection = selectedLetters.filter((e) => e !== id);
         } else {

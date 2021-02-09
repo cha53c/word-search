@@ -24,6 +24,7 @@ function App() {
     const [words, setWords] = useState(gridSetup.getWords());
     // stores the location of the words in the grid by ids
     const [wordLocations, setWordLocation] = useState(gridSetup.getWordLocations());
+    const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters in the grid, based on 3x3 grid
     const [grid, setGrid] = useState(gridSetup.getGrid());
     // letters selected when trying to find a word
@@ -43,12 +44,19 @@ function App() {
 
     const detectMatches = (selectedLetters) => {
         // TODO detect multiple matched words
-        wordLocations.forEach( word => {
+        wordLocations.forEach( (word,  index) => {
             console.log('selection for matching', selectedLetters);
             if(matching.wordFound(word, selectedLetters)) {
                 console.log('you got a match');
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);
+                const newFoundWordIndexes = foundWordIndexes.concat(index);
+                setFoundWordIndexes(newFoundWordIndexes);
+                console.log('words length', words.length);
+                console.log('foundIndexes', newFoundWordIndexes.length);
+                if(newFoundWordIndexes.length === words.length){
+                    console.log('game over');
+                }
                 console.log('matchedLetters', newMatchedLetters);
                 setSelectedLetters([]);
             }

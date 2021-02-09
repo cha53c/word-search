@@ -7,6 +7,7 @@ import WordList from "./components/WordList";
 import utils from "./utils/utils";
 import matching from "./utils/matching";
 import gridSetup from "./utils/gridSetup";
+import userEvent from "@testing-library/user-event";
 
 
 const StarsDisplay = props => (
@@ -20,16 +21,16 @@ function App() {
     const MATCHED = 'matched';
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
-    const words = gridSetup.getWords();
+    const [words, setWords] = useState(gridSetup.getWords());
     // stores the location of the words in the grid by ids
-    const wordLocations = gridSetup.getWordLocations();
+    const [wordLocations, setWordLocation] = useState(gridSetup.getWordLocations());
     // letters in the grid, based on 3x3 grid
-    const grid = gridSetup.getGrid();
-
+    const [grid, setGrid] = useState(gridSetup.getGrid());
     // letters selected when trying to find a word
     const [selectedLetters, setSelectedLetters] = useState([]);
     // contains the id of the letters for words found
     const [matchedLetters, setMatchedLetters] = useState([]);
+
 
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);

@@ -24,3 +24,11 @@ describe('test letter  selection', () => {
     })
 });
 
+describe('test random letter',  ()=> {
+    it('should return a letter', ()=> {
+        const alphabet =  "abcdefghijklmnopqrstuvwxyz"
+        const letter = utils.randomLetter();
+        expect(alphabet).toContain(letter);
+    });
+})
+

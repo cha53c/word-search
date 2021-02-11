@@ -44,6 +44,10 @@ function App() {
         setMatchedLetters([]);
     }
 
+    const gameComplete = () => {
+        return words.length === foundWordIndexes.length
+    }
+
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
         console.log('on click candidate Letters ', selectedLetters);
@@ -55,9 +59,9 @@ function App() {
 
     const detectMatches = (selectedLetters) => {
         // TODO detect multiple matched words
-        wordLocations.forEach( (word,  index) => {
+        wordLocations.forEach((word, index) => {
             console.log('selection for matching', selectedLetters);
-            if(matching.wordFound(word, selectedLetters)) {
+            if (matching.wordFound(word, selectedLetters)) {
                 console.log('you got a match');
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);
@@ -65,7 +69,7 @@ function App() {
                 setFoundWordIndexes(newFoundWordIndexes);
                 console.log('words length', words.length);
                 console.log('foundIndexes', newFoundWordIndexes.length);
-                if(newFoundWordIndexes.length === words.length){
+                if (newFoundWordIndexes.length === words.length) {
                     console.log('game over');
                 }
                 console.log('matchedLetters', newMatchedLetters);
@@ -97,11 +101,9 @@ function App() {
             </div>
             <div className="body">
                 <div className="left">
-                    {/*{utils.range(1, stars).map(starId => <div key={starId} className="star"/>)} */}
                     <WordCount total={words.length} found={foundWordIndexes.length}/>
-                    <WordList words={words} />
-                    <PlayAgain onClick={resettGame}/>
-                    {/*  <StarsDisplay count={stars}/>*/}
+                    {/*<WordList words={words}/>*/}
+                    {gameComplete() && <PlayAgain onClick={resettGame}/>}
                 </div>
                 <div className="right">
                     {grid.map((letter, index) =>

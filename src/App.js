@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import GridLetter from "./components/GridLetter";
 import WordList from "./components/WordList";
 import WordCount from "./components/WordCount";
+import PlayAgain from "./components/PlayAgain";
 
 import utils from "./utils/utils";
 import matching from "./utils/matching";
@@ -25,15 +26,23 @@ function App() {
     const [words, setWords] = useState(gridSetup.getWords());
     // stores the location of the words in the grid by ids
     const [wordLocations, setWordLocation] = useState(gridSetup.getWordLocations());
-    // indexes from wordLocations of the words found
-    const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters in the grid, based on 3x3 grid
     const [grid, setGrid] = useState(gridSetup.getGrid());
+    // indexes from wordLocations of the words found
+    const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters selected when trying to find a word
     const [selectedLetters, setSelectedLetters] = useState([]);
     // contains the id of the letters for words found
     const [matchedLetters, setMatchedLetters] = useState([]);
 
+    const resettGame = () => {
+        setWords(gridSetup.getWords());
+        setWordLocation(gridSetup.getWordLocations());
+        setGrid(gridSetup.getGrid());
+        setFoundWordIndexes([]);
+        setSelectedLetters([]);
+        setMatchedLetters([]);
+    }
 
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
@@ -91,6 +100,7 @@ function App() {
                     {/*{utils.range(1, stars).map(starId => <div key={starId} className="star"/>)} */}
                     <WordCount total={words.length} found={foundWordIndexes.length}/>
                     <WordList words={words} />
+                    <PlayAgain onClick={resettGame}/>
                     {/*  <StarsDisplay count={stars}/>*/}
                 </div>
                 <div className="right">

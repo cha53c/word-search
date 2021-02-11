@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 import GridLetter from "./components/GridLetter";
 import WordList from "./components/WordList";
+import WordCount from "./components/WordCount";
 
 import utils from "./utils/utils";
 import matching from "./utils/matching";
@@ -24,6 +25,7 @@ function App() {
     const [words, setWords] = useState(gridSetup.getWords());
     // stores the location of the words in the grid by ids
     const [wordLocations, setWordLocation] = useState(gridSetup.getWordLocations());
+    // indexes from wordLocations of the words found
     const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters in the grid, based on 3x3 grid
     const [grid, setGrid] = useState(gridSetup.getGrid());
@@ -87,7 +89,8 @@ function App() {
             <div className="body">
                 <div className="left">
                     {/*{utils.range(1, stars).map(starId => <div key={starId} className="star"/>)} */}
-                    <WordList words={words}/>
+                    <WordCount total={words.length} found={foundWordIndexes.length}/>
+                    <WordList words={words} />
                     {/*  <StarsDisplay count={stars}/>*/}
                 </div>
                 <div className="right">

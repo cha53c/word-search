@@ -45,7 +45,7 @@ function App() {
     }
 
     const gameComplete = () => {
-        return words.length === foundWordIndexes.length
+        return words.length <= foundWordIndexes.length
     }
 
     const onLetterClick = (id, currentStatus) => {
@@ -61,6 +61,7 @@ function App() {
         // TODO detect multiple matched words
         wordLocations.forEach((word, index) => {
             console.log('selection for matching', selectedLetters);
+            // TODO don't update count if word was already found
             if (matching.wordFound(word, selectedLetters)) {
                 console.log('you got a match');
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
@@ -102,12 +103,10 @@ function App() {
             <div className="body">
                 <div className="left">
                     <WordCount total={words.length} found={foundWordIndexes.length}/>
-                    {/*<WordList words={words}/>*/}
                     {gameComplete() && <PlayAgain onClick={resettGame}/>}
                 </div>
                 <div className="right">
                     {grid.map((letter, index) =>
-                        // <button key={number} className="number">{number}</button>
                         <GridLetter key={index}
                                     letter={letter}
                                     id={index}

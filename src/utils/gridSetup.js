@@ -1,16 +1,17 @@
-import utils from "./utils";
-import gridUtils from "./gridUtils";
+import Grid from "./grid";
 
 const wordLocations = [[0, 1, 2], [2, 5, 8]];
-const grid = ['F', 'O', 'X', 'I', 'M', 'O', 'G', 'F', 'B'];
-// const reduceLocations = (wordLocations) => wordLocations.reduce((prev, curr) => prev.concat(curr));
-// const populateGrid = () => new Array(9).fill('-').map( (e,i) => reduceLocations(wordLocations).contains(i) ? e : utils.randomLetter() );
+const rows = 3, columns = 3;
+const words = ["fox", "box"];
+const removeDuplicates = (array) => [...new Set(array)];
+const flatten = (array) => array.reduce((prev, curr) => prev.concat(curr))
+const locationIndexes = removeDuplicates(flatten(wordLocations));
+
 
 const gridSetup = {
-    getWords: () => ["fox", "box"],
-    getGrid: () => gridUtils.populateGrid(),
+    getWords: () => words,
+    getGrid: () => Grid.createBlankGrid(rows, columns).populateWords(words).fillBlanks().grid,
     getWordLocations: () => wordLocations,
-
 };
 
 export default gridSetup;

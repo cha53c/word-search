@@ -2,7 +2,7 @@ import utils from './utils'
 
 describe('test letter  selection', () => {
     it('should return new array', () => {
-        const selected = [1,2];
+        const selected = [1, 2];
         const updated = utils.toggleLetterSelection(4, selected);
         expect(selected).not.toBe(updated);
     });
@@ -24,9 +24,9 @@ describe('test letter  selection', () => {
     })
 });
 
-describe('test random letter',  ()=> {
-    it('should return a letter', ()=> {
-        const alphabet =  "abcdefghijklmnopqrstuvwxyz"
+describe('test random letter', () => {
+    it('should return a letter', () => {
+        const alphabet = "abcdefghijklmnopqrstuvwxyz"
         const letter = utils.randomLetter();
         expect(alphabet).toContain(letter);
     });

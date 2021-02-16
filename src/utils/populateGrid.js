@@ -16,8 +16,23 @@ const PopulateGrid = {
         }
         return directions[Math.floor(Math.random() * directions.length)];
     },
-    checkDirections(direction, rows, columns, position, word) {
-        const wordLen = word.length;
+    // TODO write tests for this
+    findNextDirection(grid, position, word, directions) {
+        const failedDirections = [];
+        let remainingDirections = directions;
+        for (let i = 0; i <= directions.length; i++) {
+            const candidateDirection = this.getRandomDirection(remainingDirections);
+            const directionOK = this.checkDirections(candidateDirection, grid.rows, grid.columns, position, word.length);
+            if (directionOK) {
+                return candidateDirection;
+            }
+            failedDirections.push(candidateDirection);
+            remainingDirections = this.getAvailableDirections(failedDirections);
+        }
+        return false;
+    },
+    checkDirections(direction, rows, columns, position, wordLen) {
+        // const wordLen = word.length;
         switch (direction) {
             case 'N':
                 if (position - ((wordLen - 1) * columns) >= 0) {
@@ -32,7 +47,7 @@ const PopulateGrid = {
                 return true;
             case 'S':
                 // TODO which way of doing this is better
-                if (position + ((wordLen-1) * columns) > (rows*columns) -1) {
+                if (position + ((wordLen - 1) * columns) > (rows * columns) - 1) {
                     return false;
                 }
                 // const wordEnd = position + ((wordLen - 1) * columns);

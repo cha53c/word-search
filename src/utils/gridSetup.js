@@ -1,5 +1,6 @@
 import Grid from "./grid";
 
+
 const wordLocations = [[0, 1, 2], [2, 5, 8]];
 const rows = 3, columns = 3;
 const words = ["fox"];

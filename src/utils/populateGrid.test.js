@@ -1,4 +1,5 @@
 import PopulateGrid from "./populateGrid";
+import Grid from "./grid";
 
 
 describe('getDirection', function () {
@@ -39,37 +40,58 @@ describe('getRandomDirection', function () {
     });
 })
 
-describe.only('checkDirections', function () {
+describe('checkDirections', function () {
     it('should return true for direction N', function () {
-        const directionOK = PopulateGrid.checkDirections('N', 3, 3, 8, 'fox');
+        const directionOK = PopulateGrid.checkDirections('N', 3, 3, 8, 3);
         expect(directionOK).toBeTruthy();
     });
     it('should return false for direction N', function () {
-        const directionOK = PopulateGrid.checkDirections('N', 3, 3, 5, 'fox');
+        const directionOK = PopulateGrid.checkDirections('N', 3, 3, 5, 3);
         expect(directionOK).toBeFalsy();
     });
     it('should return true for direction E', function () {
-        const directionOK = PopulateGrid.checkDirections('E', 3, 3, 6, 'fox');
+        const directionOK = PopulateGrid.checkDirections('E', 3, 3, 6, 3);
         expect(directionOK).toBeTruthy();
     });
     it('should return false for direction E', function () {
-        const directionOK = PopulateGrid.checkDirections('E', 3, 3, 2, 'fox');
+        const directionOK = PopulateGrid.checkDirections('E', 3, 3, 2, 3);
         expect(directionOK).toBeFalsy();
     });
     it('should return true for direction W', function () {
-        const directionOK = PopulateGrid.checkDirections('W', 3, 3, 5, 'fox');
+        const directionOK = PopulateGrid.checkDirections('W', 3, 3, 5, 3);
         expect(directionOK).toBeTruthy();
     });
     it('should return false for direction W', function () {
-        const directionOK = PopulateGrid.checkDirections('W', 3, 3, 4, 'fox');
+        const directionOK = PopulateGrid.checkDirections('W', 3, 3, 4, 3);
         expect(directionOK).toBeFalsy();
     });
     it('should return true for direction S', function () {
-        const directionOK = PopulateGrid.checkDirections('S', 3, 3, 2, 'fox');
+        const directionOK = PopulateGrid.checkDirections('S', 3, 3, 2, 3);
         expect(directionOK).toBeTruthy();
     });
     it('should return false for direction S', function () {
-        const directionOK = PopulateGrid.checkDirections('S', 3, 3, 4, 'fox');
+        const directionOK = PopulateGrid.checkDirections('S', 3, 3, 4, 3);
         expect(directionOK).toBeFalsy();
     });
+})
+
+describe.only('getNextDirection', () => {
+    const directions = ['N', 'E', "S", 'W'];
+    it('should return direction W', function () {
+        const grid = Grid.createBlankGrid(2,4);
+        const direction = PopulateGrid.findNextDirection(grid, 0, 'fox', directions);
+        expect(direction).toEqual('E');
+    });
+    it('should return false', function () {
+        const grid = Grid.createBlankGrid(2,2);
+        const direction = PopulateGrid.findNextDirection(grid, 0, 'fox', directions);
+        expect(direction).toBeFalsy();
+    });
+    it('should return truthy', function () {
+        const grid = Grid.createBlankGrid(7,7);
+        const direction = PopulateGrid.findNextDirection(grid, 17, 'fox', directions);
+        expect(direction).toBeTruthy();
+    });
+
+
 })

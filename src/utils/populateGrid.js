@@ -16,10 +16,11 @@ const PopulateGrid = {
         }
         return directions[Math.floor(Math.random() * directions.length)];
     },
-    // TODO write tests for this
+    // TODO write more tests for this
     findNextDirection(grid, position, word, directions) {
         const failedDirections = [];
         let remainingDirections = directions;
+        // TODO change to forEach
         for (let i = 0; i <= directions.length; i++) {
             const candidateDirection = this.getRandomDirection(remainingDirections);
             const directionOK = this.checkDirections(candidateDirection, grid.rows, grid.columns, position, word.length);
@@ -30,6 +31,26 @@ const PopulateGrid = {
             remainingDirections = this.getAvailableDirections(failedDirections);
         }
         return false;
+    },
+    insertWord(grid, position, direction, word) {
+        const letters = [...word];
+        letters.forEach(letter => {
+            grid
+        });
+
+    },
+    calculateNextPosition(grid, direction, currentPosition) {
+        switch (direction) {
+            case 'N':
+                return currentPosition - grid.columns;
+            case 'E':
+                return currentPosition + 1;
+            case 'S':
+                return currentPosition + grid.columns;
+            case 'W':
+                return currentPosition -1;
+
+        }
     },
     checkDirections(direction, rows, columns, position, wordLen) {
         // const wordLen = word.length;

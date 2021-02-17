@@ -75,23 +75,43 @@ describe('checkDirections', function () {
     });
 })
 
-describe.only('getNextDirection', () => {
+describe('getNextDirection', () => {
     const directions = ['N', 'E', "S", 'W'];
     it('should return direction W', function () {
-        const grid = Grid.createBlankGrid(2,4);
+        const grid = Grid.createBlankGrid(2, 4);
         const direction = PopulateGrid.findNextDirection(grid, 0, 'fox', directions);
         expect(direction).toEqual('E');
     });
     it('should return false', function () {
-        const grid = Grid.createBlankGrid(2,2);
+        const grid = Grid.createBlankGrid(2, 2);
         const direction = PopulateGrid.findNextDirection(grid, 0, 'fox', directions);
         expect(direction).toBeFalsy();
     });
     it('should return truthy', function () {
-        const grid = Grid.createBlankGrid(7,7);
+        const grid = Grid.createBlankGrid(7, 7);
         const direction = PopulateGrid.findNextDirection(grid, 17, 'fox', directions);
         expect(direction).toBeTruthy();
     });
 
+    describe.only('calculateNextPosition', () => {
+        const grid = Grid.createBlankGrid(3, 3);
+        it('should subtract column count from current position for direction N', function () {
+            const position = PopulateGrid.calculateNextPosition(grid, 'N', 4);
+            expect(position).toEqual(1);
+        });
+        it('should add column count to current position for direction S', function () {
+            const position = PopulateGrid.calculateNextPosition(grid, 'S', 5);
+            expect(position).toEqual(8);
+        });
+        it('should add 1 to current position for direction E', function () {
+            const position = PopulateGrid.calculateNextPosition(grid, 'E', 0);
+            expect(position).toEqual(1);
+        });
+        it('should subtract 1 from current position for direction W', function () {
+            const position = PopulateGrid.calculateNextPosition(grid, 'W', 2);
+            expect(position).toEqual(1);
+        });
+
+    })
 
 })

@@ -9,7 +9,7 @@ const selectSNextStartLocation = () => 0;
 
 
 const Grid = {
-    grid: ['F', 'O', 'X', '-', '-', 'O', '-', '-', 'B'],
+    letters: ['F', 'O', 'X', '-', '-', 'O', '-', '-', 'B'],
     row: 0,
     columns: 0,
     size: 0,
@@ -19,16 +19,14 @@ const Grid = {
         this.rows = rows;
         this.columns = columns;
         this.size = rows * columns;
-        this.grid = new Array(this.size).fill('-');
+        this.letters = new Array(this.size).fill('-');
         return this;
     },
     populateWords(words) {
         words.forEach( word => {
             const candidateLocation = PopulateGrid.getRandomLocation(this.size);
-
-
             const startLocation = selectSNextStartLocation(word);
-            this.grid.splice(startLocation, word.length, ...word);
+            this.letters.splice(startLocation, word.length, ...word);
             this.wordLocations = [[0,1,2]];
 
         });
@@ -36,7 +34,7 @@ const Grid = {
         return this;
     },
     fillBlanks(letterLocations) {
-        this.grid = this.grid
+        this.letters = this.letters
             .map((e, i) => this.locationIndexes.includes(i) ? e : utils.randomLetter());
         return this;
     },

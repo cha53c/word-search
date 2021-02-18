@@ -13,11 +13,12 @@ const locationIndexes = removeDuplicates(flatten(wordLocations));
 const gridSetup = {
     getWords: () => words,
     getGrid: () => {
-        const grid = Grid.createBlankGrid(rows, columns).populateWords(words).fillBlanks().grid;
+        const grid = Grid.createBlankGrid(rows, columns).populateWords(words).fillBlanks();
+        // TODO iterate over list of words
         const nextLocation = PopulateGrid.getRandomLocation(grid.size);
-        const nextDirection = PopulateGrid.findNextDirection(grid, nextLocation, 'fox', directions);
-        // TODO insert word
-        return grid;
+        const nextDirection = PopulateGrid.findNextDirection(grid, nextLocation, 'FOX', directions);
+        PopulateGrid.insertWord(grid, 0, 'E', 'FOX');
+        return grid.letters;
     },
     getWordLocations: () => wordLocations,
 };

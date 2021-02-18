@@ -1,9 +1,10 @@
 import PopulateGrid from "./populateGrid";
 import Grid from "./grid";
 
+const allDirections = ['N', 'E', "S", 'W'];
 
 describe('getDirection', function () {
-    const allDirections = ['N', 'E', "S", 'W'];
+
     it('should return all directions if no parameter is passed', function () {
         const availableDirections = PopulateGrid.getAvailableDirections();
         expect(availableDirections).toEqual(allDirections);
@@ -93,8 +94,11 @@ describe('getNextDirection', () => {
         expect(direction).toBeTruthy();
     });
 
-    describe.only('calculateNextPosition', () => {
-        const grid = Grid.createBlankGrid(3, 3);
+    describe('calculateNextPosition', () => {
+        let grid;
+        beforeEach(() => {
+            grid = Grid.createBlankGrid(3, 3);
+        });
         it('should subtract column count from current position for direction N', function () {
             const position = PopulateGrid.calculateNextPosition(grid, 'N', 4);
             expect(position).toEqual(1);
@@ -111,7 +115,21 @@ describe('getNextDirection', () => {
             const position = PopulateGrid.calculateNextPosition(grid, 'W', 2);
             expect(position).toEqual(1);
         });
+    })
 
+    describe('insertWord', () => {
+        let grid;
+        beforeEach(() => {
+            grid = Grid.createBlankGrid(3, 3);
+        });
+
+        it('should insert word at start of array', function () {
+            PopulateGrid.insertWord(grid, 0, 'E', 'fox');
+            expect(grid.letters).toHaveLength(9);
+            expect(grid.letters[0]).toEqual('f');
+            expect(grid.letters[1]).toEqual('o');
+            expect(grid.letters[2]).toEqual('x');
+        });
     })
 
 })

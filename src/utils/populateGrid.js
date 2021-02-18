@@ -34,10 +34,11 @@ const PopulateGrid = {
     },
     insertWord(grid, position, direction, word) {
         const letters = [...word];
+        let currentPosition = position;
         letters.forEach(letter => {
-            grid
+            grid.letters[currentPosition] = letter;
+            currentPosition = this.calculateNextPosition(grid, direction, currentPosition);
         });
-
     },
     calculateNextPosition(grid, direction, currentPosition) {
         switch (direction) {

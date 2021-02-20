@@ -3,15 +3,14 @@ import PopulateGrid from "./populateGrid";
 
 // TODO ahange to object, with NORTH, EAST etc
 const directions = ['N', 'E', 'S', 'W'];
-// const wordLocations = [[0, 1, 2], [2, 5, 8]];
 const removeDuplicates = (array) => [...new Set(array)];
 const flatten = (array) => array.reduce((prev, curr) => prev.concat(curr))
 //const locationIndexes = removeDuplicates(flatten(wordLocations));
-// const selectSNextStartLocation = () => 0;
+
 
 
 const Grid = {
-    letters: ['F', 'O', 'X', '-', '-', 'O', '-', '-', 'B'],
+    letters: [],
     row: 0,
     columns: 0,
     size: 0,
@@ -40,8 +39,7 @@ const Grid = {
         //     this.wordLocations = [[0,1,2]];
         //
         // });
-         // TODO poplulate locations
-        // this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
+        this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
         return this;
     },
     fillBlanks(letterLocations) {

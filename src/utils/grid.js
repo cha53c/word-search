@@ -8,7 +8,6 @@ const flatten = (array) => array.reduce((prev, curr) => prev.concat(curr))
 //const locationIndexes = removeDuplicates(flatten(wordLocations));
 
 
-
 const Grid = {
     letters: [],
     row: 0,
@@ -16,6 +15,10 @@ const Grid = {
     size: 0,
     wordLocations: [],
     locationIndexes: [],
+    setup(rows, columns, words) {
+        this.createBlankGrid(rows, columns).populateWords(words).fillBlanks();
+        return this;
+    },
     createBlankGrid(rows, columns) {
         this.rows = rows;
         this.columns = columns;
@@ -25,21 +28,22 @@ const Grid = {
     },
     populateWords(words) {
         // TODO iterate over list of words
-        const nextLocation = PopulateGrid.getRandomLocation(this.size);
-        const nextDirection = PopulateGrid.findNextDirection(this, nextLocation, 'FOX', directions);
-        // TODO update locations when inserting words
-        PopulateGrid.insertWord(this, 0, 'S', 'FOX');
-        // PopulateGrid.insertWord(grid, 1, 'S', 'FOX');
-        PopulateGrid.insertWord(this, 8, 'W', 'BOX');
-        //PopulateGrid.insertWord(grid, 8, 'N', 'FOX');
-        // words.forEach( word => {
-        //     const candidateLocation = PopulateGrid.getRandomLocation(this.size);
-        //     const startLocation = selectSNextStartLocation(word);
-        //     this.letters.splice(startLocation, word.length, ...word);
-        //     this.wordLocations = [[0,1,2]];
-        //
-        // });
+        words.forEach(word => {
+            let directionFound = false;
+            let nextLocation;
+            let nextDirection;
+            while (directionFound === false) {
+                console.log('grid size', this.size);
+                nextLocation = PopulateGrid.getRandomLocation(this.size);
+                console.log('nextLocation', nextLocation);
+                nextDirection = PopulateGrid.findNextDirection(this, nextLocation, word, directions);
+                console.log('nextDirection', nextDirection);
+                directionFound = nextDirection;
+            }
+            PopulateGrid.insertWord(this, nextLocation, nextDirection, word);
+        });
         this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
+        console.log('letters ', this.letters);
         return this;
     },
     fillBlanks(letterLocations) {

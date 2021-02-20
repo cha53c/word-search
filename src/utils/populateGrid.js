@@ -1,6 +1,6 @@
 const PopulateGrid = {
     getRandomLocation(gridSize) {
-        Math.floor(Math.random() * gridSize)
+        return Math.floor(Math.random() * gridSize)
     },
     getAvailableDirections(failedDirections = []) {
         // directions can be N E S W
@@ -36,6 +36,7 @@ const PopulateGrid = {
         const letters = [...word];
         const letterLocations = [];
         let currentPosition = position;
+        // TODO detect collisions
         letters.forEach(letter => {
             letterLocations.push(currentPosition);
             grid.letters[currentPosition] = letter;

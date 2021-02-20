@@ -1,11 +1,13 @@
 import utils from "./utils";
 import PopulateGrid from "./populateGrid";
 
+// TODO ahange to object, with NORTH, EAST etc
+const directions = ['N', 'E', 'S', 'W'];
 // const wordLocations = [[0, 1, 2], [2, 5, 8]];
 const removeDuplicates = (array) => [...new Set(array)];
 const flatten = (array) => array.reduce((prev, curr) => prev.concat(curr))
 //const locationIndexes = removeDuplicates(flatten(wordLocations));
-const selectSNextStartLocation = () => 0;
+// const selectSNextStartLocation = () => 0;
 
 
 const Grid = {
@@ -23,14 +25,23 @@ const Grid = {
         return this;
     },
     populateWords(words) {
-        words.forEach( word => {
-            const candidateLocation = PopulateGrid.getRandomLocation(this.size);
-            const startLocation = selectSNextStartLocation(word);
-            this.letters.splice(startLocation, word.length, ...word);
-            this.wordLocations = [[0,1,2]];
-
-        });
-        this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
+        // TODO iterate over list of words
+        const nextLocation = PopulateGrid.getRandomLocation(this.size);
+        const nextDirection = PopulateGrid.findNextDirection(this, nextLocation, 'FOX', directions);
+        // TODO update locations when inserting words
+        PopulateGrid.insertWord(this, 0, 'S', 'FOX');
+        // PopulateGrid.insertWord(grid, 1, 'S', 'FOX');
+        PopulateGrid.insertWord(this, 8, 'W', 'BOX');
+        //PopulateGrid.insertWord(grid, 8, 'N', 'FOX');
+        // words.forEach( word => {
+        //     const candidateLocation = PopulateGrid.getRandomLocation(this.size);
+        //     const startLocation = selectSNextStartLocation(word);
+        //     this.letters.splice(startLocation, word.length, ...word);
+        //     this.wordLocations = [[0,1,2]];
+        //
+        // });
+         // TODO poplulate locations
+        // this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
         return this;
     },
     fillBlanks(letterLocations) {

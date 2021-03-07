@@ -117,19 +117,60 @@ describe('getNextDirection', () => {
         });
     })
 
-    describe('insertWord', () => {
+    describe.only('insertWord', () => {
         let grid;
         beforeEach(() => {
             grid = Grid.createBlankGrid(3, 3);
         });
 
         it('should insert word at start of array', function () {
-            PopulateGrid.insertWord(grid, 0, 'E', 'fox');
+            let inserted = PopulateGrid.insertWord(grid, 0, 'E', 'fox');
+            expect(inserted).toBeTruthy();
             expect(grid.letters).toHaveLength(9);
             expect(grid.letters[0]).toEqual('f');
             expect(grid.letters[1]).toEqual('o');
             expect(grid.letters[2]).toEqual('x');
         });
+        it('should return false if there are collisions', function () {
+            const startSate = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
+            grid.locationIndexes = [0, 1, 2];
+            grid.letters = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
+            let inserted = PopulateGrid.insertWord(grid, 2, 'S', 'poo');
+            expect(inserted).toBeFalsy();
+            expect(grid.letters).toEqual(startSate);
+        });
+        it('should return true if collision but letters match', function () {
+            const startSate = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
+            const endState = ['f', 'o', 'x', 'i', '-', '-', 'n', '-', '-'];
+            grid.locationIndexes = [0, 1, 2];
+            grid.letters = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
+            let inserted = PopulateGrid.insertWord(grid, 0, 'S', 'fin');
+            expect(inserted).toBeTruthy();
+            expect(grid.letters).toEqual(endState);
+        });
     })
+})
 
+describe('collisionDetection', () => {
+    let grid;
+    beforeEach(() => {
+        grid = Grid.createBlankGrid(3, 3);
+    });
+    it('should return false when there are no letter in location', function () {
+        grid.locationIndexes = [0, 1, 2];
+        const collision = PopulateGrid.collisionDetections(grid, 'i', 3);
+        expect(collision).toBeFalsy();
+    });
+    it('should return false when there is a letter in location but it is the same letter', function () {
+        grid.locationIndexes = [0, 1, 2];
+        grid.letters[1] = 'i';
+        const collision = PopulateGrid.collisionDetections(grid, 'i', 1);
+        expect(collision).toBeFalsy();
+    });
+    it('should return true when there is a letter in location which does not match the new letter', function () {
+        grid.locationIndexes = [0, 1, 2];
+        grid.letters[1] = 'b';
+        const collision = PopulateGrid.collisionDetections(grid, 'i', 1);
+        expect(collision).toBeTruthy();
+    });
 })

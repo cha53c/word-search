@@ -33,16 +33,53 @@ const PopulateGrid = {
         return false;
     },
     insertWord(grid, position, direction, word) {
+        console.log('insertWord', word);
         const letters = [...word];
-        const letterLocations = [];
+        let letterLocations = [];
         let currentPosition = position;
-        // TODO detect collisions
-        letters.forEach(letter => {
+        let collision = false;
+        for(let i = 0; i < letters.length; i++){
+            if (this.collisionDetections(grid, letters[i], currentPosition)) {
+                collision = true;
+                letterLocations = [];
+            }
+            if (collision) {
+                break;
+            }
             letterLocations.push(currentPosition);
-            grid.letters[currentPosition] = letter;
+            // grid.letters[currentPosition] = letters[i];
             currentPosition = this.calculateNextPosition(grid, direction, currentPosition);
-        });
-        grid.wordLocations.push(letterLocations);
+        }
+        // letters.forEach(letter => {
+        //     if (this.collisionDetections(grid, letter, currentPosition)) {
+        //         collision = true;
+        //     }
+        //     if (collision) {
+        //         return
+        //     }
+        //     letterLocations.push(currentPosition);
+        //     grid.letters[currentPosition] = letter;
+        //     currentPosition = this.calculateNextPosition(grid, direction, currentPosition);
+        // });
+        if (collision) {
+            console.log('collision detected');
+            return false;
+        } else {
+            console.log('no collisions');
+            console.log('adding letters to grid');
+            for(let i = 0; i < letters.length; i++) {
+                grid.letters[letterLocations[i]] = letters[i];
+            }
+            console.log('adding to wordLocations', letterLocations );
+            grid.wordLocations.push(letterLocations);
+            return true
+        }
+    },
+    collisionDetections(grid, letter, location) {
+        if (grid.locationIndexes.includes(location)) {
+            //if the letters are the same then it's not a collision
+            return letter !== grid.letters[location];
+        }
     },
     calculateNextPosition(grid, direction, currentPosition) {
         switch (direction) {
@@ -53,12 +90,11 @@ const PopulateGrid = {
             case 'S':
                 return currentPosition + grid.columns;
             case 'W':
-                return currentPosition -1;
+                return currentPosition - 1;
 
         }
     },
     checkDirections(direction, rows, columns, position, wordLen) {
-        // const wordLen = word.length;
         switch (direction) {
             case 'N':
                 if (position - ((wordLen - 1) * columns) >= 0) {

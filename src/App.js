@@ -9,11 +9,10 @@ import utils from "./utils/utils";
 import matching from "./utils/matching";
 import gridSetup from "./utils/gridSetup";
 import Grid from "./utils/grid";
+import userEvent from "@testing-library/user-event";
 
-const words = [];
 const rows = 3;
 const columns = 3;
-
 
 const StarsDisplay = props => (
     <>
@@ -26,13 +25,10 @@ function App() {
     const MATCHED = 'matched';
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
-
-    const [words, setWords] = useState(gridSetup.getWords());
-    const [grid, setGrid] = useState(Grid.setup(rows, columns, words));
-    // stores the location of the words in the grid by ids
-    const [wordLocations, setWordLocation] = useState(grid.wordLocations);
-    // letters in the grid, based on 3x3 grid
-    const [letters, setLetters] = useState(grid.letters);
+    const [newGame, setNewGame] = useState(true);
+    const [words, setWords] = useState(["FOX", "BOX"]);
+    const [grid, setGrid] = useState(Grid.setup(rows, columns, ["FOX", "BOX"]));
+    // console.log('grid ', grid );
     // indexes from wordLocations of the words found
     const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters selected when trying to find a word
@@ -41,10 +37,11 @@ function App() {
     const [matchedLetters, setMatchedLetters] = useState([]);
 
     const setupGame = () => {
-        setWords(gridSetup.getWords());
+        console.log('game reset');
+        grid.newGame = true;
+        const words = gridSetup.getWords()
+        setWords(words)
         setGrid(Grid.setup(rows, columns, words));
-        setWordLocation(grid.wordLocations);
-        setLetters(grid.letters);
         setFoundWordIndexes([]);
         setSelectedLetters([]);
         setMatchedLetters([]);
@@ -56,6 +53,9 @@ function App() {
 
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
+        console.log('grid ', grid);
+        console.log('letters ', grid.letters);
+        console.log('workLocations', grid.wordLocations);
         console.log('on click candidate Letters ', selectedLetters);
         const updatedSelection = (utils.toggleLetterSelection(id, selectedLetters));
         console.log('after click candidate letters', updatedSelection);
@@ -65,7 +65,7 @@ function App() {
 
     const detectMatches = (selectedLetters) => {
         // TODO detect multiple matched words
-        wordLocations.forEach((word, index) => {
+        grid.wordLocations.forEach((word, index) => {
             console.log('selection for matching', selectedLetters);
             // TODO don't update count if word was already found
             if (matching.wordFound(word, selectedLetters)) {
@@ -112,7 +112,7 @@ function App() {
                     {gameComplete() && <PlayAgain onClick={setupGame}/>}
                 </div>
                 <div className="right">
-                    {letters.map((letter, index) =>
+                    {grid.letters.map((letter, index) =>
                         <GridLetter key={index}
                                     letter={letter}
                                     id={index}

@@ -1,6 +1,7 @@
 const PopulateGrid = {
     getRandomLocation(gridSize) {
-        return Math.floor(Math.random() * gridSize)
+        return Math.floor(Math.random() * gridSize);
+        // return availableLocations[`Math.floor(Math.random() * availableLocations.length)];
     },
     getAvailableDirections(failedDirections = []) {
         // directions can be N E S W

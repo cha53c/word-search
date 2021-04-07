@@ -15,14 +15,15 @@
 
 .left {
   text-align: center;
-  width: 50%;
+  width: 40%;
   border: thin solid #ddd;
 }
 
 .right {
+  background-color: lightgrey;
   text-align: center;
   padding: 10px;
-  width: 50%;
+  width: 60%;
   border: thin solid #ddd;
 }
 
@@ -41,7 +42,7 @@
   border: thin solid #ddd;
   width: 45px;
   height: 45px;
-  margin: 10px;
+  margin: 3px;
   font-size: 25px;
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 
 // Color Theme
 const colors = {
-    available: 'lightgray',
+    available: 'white',
     matched: 'lightgreen',
     candidate: 'lightcoral',
 };

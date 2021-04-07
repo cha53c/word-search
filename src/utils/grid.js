@@ -43,7 +43,7 @@ const Grid = {
             let nextDirection;
             let insertUnsuccessful = true;
             let attempts = 0;
-            while (insertUnsuccessful && (attempts++ < 10)) {
+            while (insertUnsuccessful && (attempts++ < this.size)) {
                 console.log('attempts', attempts);
                 while (directionFound === false) {
                     console.log('grid size', this.size);

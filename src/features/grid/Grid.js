@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import GridLetter from "../../components/GridLetter";
 import utils from "../../utils/utils";
 import matching from "../../utils/matching";
-// import {wordFound} from "../words/wordsSlice";
 import {wordFound} from "./gridSlice";
 import {incrementFound} from "../../components/counterSlice";
 import gridSetup from "../../utils/gridSetup";
@@ -56,12 +55,9 @@ export const Grid = () => {
             if (matching.wordFound(word, selectedLetters)) {
                 console.log('you got a match');
                 console.log('grid.words', grid.words);
-                // TODO this is not the word found, but the indexes of the letter locations
+                // TODO this is not the word found, but an array of the letter locations for the word
                 dispatch(wordFound(word));
-                // let wo = grid.words.find(w => w.location === word);
-                // console.log('wo', wo);
-                // dispatch(wordFound(wo.word));
-                // dispatch(incrementFound());
+
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);
                 const newFoundWordIndexes = foundWordIndexes.concat(index);

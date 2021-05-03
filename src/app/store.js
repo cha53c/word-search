@@ -6,8 +6,8 @@ import counterReducer from '../components/counterSlice'
 
 export default configureStore({
     reducer: {
-        counter: counterReducer,
-        words: wordsReducer,
         grid: gridReducer,
+        words: wordsReducer,
+        counter: counterReducer,
     }
 })

@@ -3,8 +3,6 @@ import {current} from '@reduxjs/toolkit'
 import Grid from "../../utils/grid";
 import gridSetup from "../../utils/gridSetup";
 
-// const words = useSelector(state => state.words);
-// const initialState = Grid.setup(5,5, gridSetup.getWords())
 
 const gridSlice = createSlice({
     name: 'grid',

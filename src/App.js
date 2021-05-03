@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { wordFound } from "./features/words/wordsSlice";
 
 import GridLetter from "./components/GridLetter";
-import WordCount from "./components/WordCount";
+import Counter from "./components/Counter";
 import PlayAgain from "./components/PlayAgain";
 
 import utils from "./utils/utils";
@@ -49,7 +49,7 @@ function App() {
             </div>
             <div className="body">
                 <div className="left">
-                    <WordCount total={words.length} found={foundWordIndexes.length}/>
+                    <Counter />
                     {/*<WordsList words={words}/>*/}
                     <WordsList />
                 </div>

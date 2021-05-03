@@ -3,7 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import GridLetter from "../../components/GridLetter";
 import utils from "../../utils/utils";
 import matching from "../../utils/matching";
-import {wordFound} from "../words/wordsSlice";
+// import {wordFound} from "../words/wordsSlice";
+import {wordFound} from "./gridSlice";
+import {incrementFound} from "../../components/counterSlice";
 import gridSetup from "../../utils/gridSetup";
 
 export const Grid = () => {
@@ -34,7 +36,7 @@ export const Grid = () => {
         // if(gameComplete()) {
         //     return;
         // }
-        console.log ('id ', id);
+        console.log('id ', id);
         console.log('letters ', grid.letters);
         console.log('workLocations', grid.wordLocations);
         console.log('on click candidate Letters ', selectedLetters);
@@ -53,7 +55,13 @@ export const Grid = () => {
             // TODO don't update count if word was already found
             if (matching.wordFound(word, selectedLetters)) {
                 console.log('you got a match');
-                dispatch(wordFound({word}))
+                console.log('grid.words', grid.words);
+                // TODO this is not the word found, but the indexes of the letter locations
+                dispatch(wordFound(word));
+                // let wo = grid.words.find(w => w.location === word);
+                // console.log('wo', wo);
+                // dispatch(wordFound(wo.word));
+                // dispatch(incrementFound());
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);
                 const newFoundWordIndexes = foundWordIndexes.concat(index);

@@ -13,12 +13,17 @@ const Grid = {
     rows: 0,
     columns: 0,
     size: 0,
+    words: [],
     wordLocations: [],
     locationIndexes: [],
     setup(rows, columns, words) {
-        if(this.newGame) {
+        if (this.newGame) {
             this.newGame = false
             this.wordLocations = [];
+            this.words = words.map(word => {
+                return {word: word, location: [], found: false}
+            });
+            console.log('words', this.words);
             this.createBlankGrid(rows, columns).populateWords(words).fillBlanks();
         }
         console.log('this in setup', this);
@@ -54,11 +59,11 @@ const Grid = {
                     directionFound = nextDirection;
                 }
                 directionFound = false;
-                console.log('word ',word);
+                console.log('word ', word);
                 let inserted = PopulateGrid.insertWord(this, nextLocation, nextDirection, word);
                 console.log('letters ', this.letters);
                 // TODO retry word if it can't be inserted
-                if(inserted) {
+                if (inserted) {
                     this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
                     insertUnsuccessful = false;
                 }

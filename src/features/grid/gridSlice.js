@@ -13,8 +13,8 @@ const gridSlice = createSlice({
             console.log('state words ', current(state.words));
             console.log('wordfound action', action);
             state.words.find(word => {
-                console.log('word', current(word), 'location ', current(word.location), 'payload ', action.payload, 'match?', word.location === action.payload);
-                return current(word.location) === action.payload}).found = true;
+                console.log('word', current(word), 'location ', current(word.location), 'payload ', action.payload, 'match?', word.word === action.payload.word);
+                return word.word === action.payload.word}).found = true;
         },
     }
 })

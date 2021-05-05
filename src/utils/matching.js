@@ -1,6 +1,6 @@
 const matching = {
-    wordFound: (word, letters) =>
-        JSON.stringify([...letters].sort()) === JSON.stringify([...word].sort()),
+    isMatch: (actual, selected) =>
+        JSON.stringify([...selected].sort()) === JSON.stringify([...actual].sort()),
 
 };
 

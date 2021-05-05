@@ -49,14 +49,15 @@ export const Grid = () => {
         console.log('selectedLetters', selectedLetters);
         console.log('locationIndex', grid.locationIndexes);
         // TODO prevent counting already matched words
-        grid.wordLocations.forEach((word, index) => {
+        grid.wordLocations.forEach((wordLocation, index) => {
             console.log('selection for matching', selectedLetters);
             // TODO don't update count if word was already found
-            if (matching.wordFound(word, selectedLetters)) {
+            if (matching.isMatch(wordLocation, selectedLetters)) {
                 console.log('you got a match');
                 console.log('grid.words', grid.words);
                 // TODO this is not the word found, but an array of the letter locations for the word
-                dispatch(wordFound(word));
+                const foundWord = grid.words.find( w => w.location === wordLocation);
+                dispatch(wordFound(foundWord));
 
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);

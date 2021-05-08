@@ -12,9 +12,9 @@ export const WordsList = () => {
     })
 
     return (
-        <ul style={{listStyleType: "none", paddingLeft: 0}}>
+        <ol style={{paddingLeft: 0}}>
             {renderedWords}
-        </ul>
+        </ol>
     )
 }
 

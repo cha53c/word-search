@@ -58,7 +58,7 @@ export const Grid = () => {
                 // TODO this is not the word found, but an array of the letter locations for the word
                 const foundWord = grid.words.find( w => w.location === wordLocation);
                 dispatch(wordFound(foundWord));
-
+                dispatch(incrementFound());
                 const newMatchedLetters = matchedLetters.concat(selectedLetters);
                 setMatchedLetters(newMatchedLetters);
                 const newFoundWordIndexes = foundWordIndexes.concat(index);

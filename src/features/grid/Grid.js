@@ -23,7 +23,7 @@ export const Grid = () => {
     const grid = useSelector(state => state.grid);
     console.log('grid letters', grid.letters);
     // const letters = useSelector(state => state.grid.letters);
-    // TODO change to use word objects from wordSlice
+    // TODO change to use word objects from wordSlice. Is this still correct???
     const words = gridSetup.getWords;
     // const words = useSelector(state => state.words);
 

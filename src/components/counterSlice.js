@@ -5,7 +5,11 @@ const counterSlice = createSlice({
     name: "counter",
     initialState: {found: 0, total: gridSetup.getWords().length},
     reducers: {
-        incrementFound: state => {state.found += 1},
+        incrementFound: state => {
+            if (state.found >= state.total) return;
+            state.found += 1
+        },
+        // incrementFound: state => {state.found += 1},
         addTotal: (state, action) => {
             state.total = action.payload.value;
         }

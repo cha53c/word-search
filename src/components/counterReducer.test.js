@@ -1,5 +1,4 @@
 import reducer from './counterSlice'
-// import {incrementFound} from "./counterSlice";
 
 describe('counter reducer', () => {
     it('should increment by 1 if total is not reached', () => {

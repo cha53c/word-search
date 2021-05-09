@@ -8,6 +8,7 @@ const gridSlice = createSlice({
     name: 'grid',
     initialState: Grid.setup(5,5, gridSetup.getWords()),
     reducers: {
+        // TODO do i need to track if a word is found in the grid?
         wordFound: (state, action) => {
             console.log('state', current(state));
             console.log('state words ', current(state.words));

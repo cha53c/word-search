@@ -48,27 +48,26 @@ export const Grid = () => {
     const detectMatches = (selectedLetters) => {
         console.log('selectedLetters', selectedLetters);
         console.log('locationIndex', grid.locationIndexes);
-        // TODO prevent counting already matched words
-        grid.wordLocations.forEach((wordLocation, index) => {
+        grid.words.forEach((wordData, index) => {
+            console.log('wordData ', wordData);
             console.log('selection for matching', selectedLetters);
-            // TODO don't update count if word was already found
-            if (matching.isMatch(wordLocation, selectedLetters)) {
+            if (matching.isMatch(wordData.location, selectedLetters)) {
                 console.log('you got a match');
                 console.log('grid.words', grid.words);
-                // TODO this is not the word found, but an array of the letter locations for the word
-                const foundWord = grid.words.find( w => w.location === wordLocation);
-                dispatch(wordFound(foundWord));
-                dispatch(incrementFound());
-                const newMatchedLetters = matchedLetters.concat(selectedLetters);
-                setMatchedLetters(newMatchedLetters);
-                const newFoundWordIndexes = foundWordIndexes.concat(index);
-                setFoundWordIndexes(newFoundWordIndexes);
-                console.log('words length', words.length);
-                console.log('foundIndexes', newFoundWordIndexes.length);
-                if (newFoundWordIndexes.length === words.length) {
-                    console.log('game over');
+                if (wordData.found === false) {
+                    dispatch(wordFound(wordData));
+                    dispatch(incrementFound());
+                    const newMatchedLetters = matchedLetters.concat(selectedLetters);
+                    setMatchedLetters(newMatchedLetters);
+                    const newFoundWordIndexes = foundWordIndexes.concat(index);
+                    setFoundWordIndexes(newFoundWordIndexes);
+                    console.log('words length', words.length);
+                    console.log('foundIndexes', newFoundWordIndexes.length);
+                    // if (newFoundWordIndexes.length === words.length) {
+                    //     console.log('game over');
+                    // }
+                    console.log('matchedLetters', newMatchedLetters);
                 }
-                console.log('matchedLetters', newMatchedLetters);
                 setSelectedLetters([]);
             }
         });

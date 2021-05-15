@@ -4,11 +4,13 @@ const playAgainSlice = createSlice({
     name: 'playAgain',
     initialState: {visible: false},
     reducers: {
-        toggleVisible (state) {
-            state.visible = !state.visible;
+        show (state) {
+            state.visible = true;
+        },
+        hide(state){
+            state.visible = false;
         }
     }
-
 });
 
 export default playAgainSlice.reducer;

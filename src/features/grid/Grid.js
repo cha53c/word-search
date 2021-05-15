@@ -63,14 +63,17 @@ export const Grid = () => {
                     setFoundWordIndexes(newFoundWordIndexes);
                     console.log('words length', words.length);
                     console.log('foundIndexes', newFoundWordIndexes.length);
-                    // if (newFoundWordIndexes.length === words.length) {
-                    //     console.log('game over');
-                    // }
                     console.log('matchedLetters', newMatchedLetters);
                 }
                 setSelectedLetters([]);
             }
         });
+        // console.log('false count ', grid.words.filter(w => w.found === false).length);
+        // if(grid.words.filter(w => w.found === false).length === 0){
+        //     console.log('game over');
+        //     // TODO dispatch congratulations component
+        //     // TODO dispatch to new game button
+        // }
     };
 
     const numberStatus = (number) => {

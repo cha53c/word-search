@@ -50,7 +50,7 @@ function App() {
             <div className="body">
                 <div className="left">
                     <Counter />
-                    {/*<WordsList words={words}/>*/}
+                    <PlayAgain />
                     <WordsList />
                 </div>
                 <div className="right">

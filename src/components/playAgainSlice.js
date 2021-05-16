@@ -13,4 +13,5 @@ const playAgainSlice = createSlice({
     }
 });
 
+export const {show, hide} = playAgainSlice.actions;
 export default playAgainSlice.reducer;

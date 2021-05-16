@@ -4,7 +4,7 @@ import GridLetter from "../../components/GridLetter";
 import utils from "../../utils/utils";
 import matching from "../../utils/matching";
 import {wordFound} from "./gridSlice";
-import {incrementFound} from "../../components/counterSlice";
+import {show} from "../../components/playAgainSlice";
 import gridSetup from "../../utils/gridSetup";
 
 export const Grid = () => {
@@ -56,7 +56,6 @@ export const Grid = () => {
                 console.log('grid.words', grid.words);
                 if (wordData.found === false) {
                     dispatch(wordFound(wordData));
-                    dispatch(incrementFound());
                     const newMatchedLetters = matchedLetters.concat(selectedLetters);
                     setMatchedLetters(newMatchedLetters);
                     const newFoundWordIndexes = foundWordIndexes.concat(index);
@@ -68,12 +67,6 @@ export const Grid = () => {
                 setSelectedLetters([]);
             }
         });
-        // console.log('false count ', grid.words.filter(w => w.found === false).length);
-        // if(grid.words.filter(w => w.found === false).length === 0){
-        //     console.log('game over');
-        //     // TODO dispatch congratulations component
-        //     // TODO dispatch to new game button
-        // }
     };
 
     const numberStatus = (number) => {

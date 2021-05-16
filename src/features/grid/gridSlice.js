@@ -16,9 +16,8 @@ const gridSlice = createSlice({
             word.found = true;
             console.log('false count ', state.words.filter(w => w.found === false).length);
             if(state.words.filter(w => w.found === false).length === 0){
-                console.log('game over');
-                // TODO dispatch congratulations component
-                // TODO dispatch to new game button
+                console.log('game completed');
+                state.gameComplete = true;
             }
         },
     }

@@ -8,7 +8,8 @@ const flatten = (array) => array.reduce((prev, curr) => prev.concat(curr));
 
 
 const Grid = {
-    newGame: true,
+    // newGame: true,
+    gameComplete: false,
     letters: [],
     rows: 0,
     columns: 0,
@@ -17,15 +18,15 @@ const Grid = {
     wordLocations: [],
     locationIndexes: [],
     setup(rows, columns, words) {
-        if (this.newGame) {
-            this.newGame = false
+        // if (this.newGame) {
+        //     this.newGame = false
             this.wordLocations = [];
             this.words = words.map(word => {
                 return {word: word, location: [], found: false}
             });
             console.log('words', this.words);
             this.createBlankGrid(rows, columns).populateWords(words).fillBlanks();
-        }
+        // }
         console.log('this in setup', this);
         console.log('this letters', this.letters);
         return this;

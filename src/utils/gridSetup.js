@@ -11,11 +11,19 @@ const words = ["FOX", "BOX", "LOG", "FIG"];
 
 const gridSetup = {
     getWords: () => words,
-    // getGrid: () => {
-    //     const grid = Grid.setup(rows, columns, words);
-    //     return grid.letters;
-    // },
-    // getWordLocations: () => wordLocations,
+    greatBlankGrid: (rows, columns) => {
+        console.log('createBlankGrid');
+        const grid = {};
+        grid.rows = rows;
+        grid.columns = columns;
+        grid.size = rows * columns; // TODO do I need this? can it just be calculated each time?
+        grid.letters = new Array(rows * columns).fill('-');
+        grid.gameComplete = false;
+        grid.words = [];
+        grid.wordLocations = [];
+        grid.locationIndexe = [];
+        return grid;
+    },
 };
 
 export default gridSetup;

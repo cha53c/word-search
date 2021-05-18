@@ -1,4 +1,5 @@
 import './App.css';
+// TODO clean up unused code
 import React, {useState} from 'react';
 import { useDispatch } from "react-redux";
 import { wordFound } from "./features/words/wordsSlice";
@@ -10,7 +11,7 @@ import PlayAgain from "./components/PlayAgain";
 import utils from "./utils/utils";
 import matching from "./utils/matching";
 import gridSetup from "./utils/gridSetup";
-// import Grid from "./utils/grid";
+import grid from "./utils/grid";
 import {WordsList} from "./features/words/WordsList";
 import {Grid} from "./features/grid/Grid"
 
@@ -50,7 +51,7 @@ function App() {
             <div className="body">
                 <div className="left">
                     <Counter />
-                    <PlayAgain />
+                    <PlayAgain onClick={grid.setup} />
                     <WordsList />
                 </div>
                 <div className="right">

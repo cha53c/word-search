@@ -1,9 +1,11 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {setNewState} from "../features/grid/gridSlice";
 
 const PlayAgain = props => {
-    const visible = useSelector(state => state.playAgain.visible);
-    return visible ? (<button onClick = {props.onClick} > Play Again</button>) :null;
+    const dispatch = useDispatch();
+    const visible = useSelector(state => state.grid.gameComplete);
+    return visible ? (<button onClick = {() => dispatch(setNewState())}> Play Again</button>) :null;
 };
 
 export default PlayAgain;

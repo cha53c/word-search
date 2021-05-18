@@ -20,8 +20,12 @@ const gridSlice = createSlice({
                 state.gameComplete = true;
             }
         },
+        setNewState: (state, action) => {
+            console.log('You are setting the grid state');
+            this.state = Grid.setup(5,5, gridSetup.getWords());
+        }
     }
 })
 
-export const {wordFound} = gridSlice.actions;
+export const {wordFound, setNewState} = gridSlice.actions;
 export default gridSlice.reducer;

@@ -4,7 +4,6 @@ import GridLetter from "../../components/GridLetter";
 import utils from "../../utils/utils";
 import matching from "../../utils/matching";
 import {wordFound} from "./gridSlice";
-import {show} from "../../components/playAgainSlice";
 import gridSetup from "../../utils/gridSetup";
 
 export const Grid = () => {
@@ -19,22 +18,12 @@ export const Grid = () => {
     const [matchedLetters, setMatchedLetters] = useState([]);
 
     const dispatch = useDispatch();
-    // const letters = useSelector(state => state.grid.letters);
     const grid = useSelector(state => state.grid);
     console.log('grid letters', grid.letters);
-    // const letters = useSelector(state => state.grid.letters);
     // TODO change to use word objects from wordSlice. Is this still correct???
     const words = gridSetup.getWords;
-    // const words = useSelector(state => state.words);
-
-    const gameComplete = () => {
-        return words.length <= foundWordIndexes.length;
-    }
 
     const onLetterClick = (id, currentStatus) => {
-        // if(gameComplete()) {
-        //     return;
-        // }
         console.log('id ', id);
         console.log('letters ', grid.letters);
         console.log('workLocations', grid.wordLocations);
@@ -95,6 +84,5 @@ export const Grid = () => {
     )
 
     return <React.Fragment>{gridItems}</React.Fragment>
-
 }
 

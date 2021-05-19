@@ -2,7 +2,7 @@ import utils from "./utils";
 import PopulateGrid from "./populateGrid";
 
 // TODO change to object, with NORTH, EAST etc
-const directions = ['N', 'E', 'S', 'W'];
+export const directions = ['N', 'E', 'S', 'W'];
 
 const Grid = {
     gameComplete: false,

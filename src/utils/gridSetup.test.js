@@ -11,3 +11,11 @@ describe('createBlankGrid', () => {
         expect(grid.gameComplete).toBeFalsy();
     });
 })
+describe('addWords', () =>{
+    it('should populate words element of grid with word objects', function () {
+        const grid = {}
+        const updatedGrid = gridSetup.addWords(grid, ['bish','bash','bosh']);
+        expect(updatedGrid.words.length).toEqual(3)
+        expect(updatedGrid.words[0]).toEqual({word: 'bish', location: [], found: false});
+    });
+})

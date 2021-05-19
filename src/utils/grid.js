@@ -3,9 +3,6 @@ import PopulateGrid from "./populateGrid";
 
 // TODO change to object, with NORTH, EAST etc
 const directions = ['N', 'E', 'S', 'W'];
-const removeDuplicates = (array) => [...new Set(array)];
-const flatten = (array) => array.reduce((prev, curr) => prev.concat(curr));
-
 
 const Grid = {
     gameComplete: false,
@@ -14,10 +11,8 @@ const Grid = {
     columns: 0,
     size: 0,
     words: [],
-    wordLocations: [],
     locationIndexes: [],
     setup(rows, columns, words) {
-        this.wordLocations = [];
         this.words = words.map(word => {
             return {word: word, location: [], found: false}
         });
@@ -61,7 +56,7 @@ const Grid = {
                 console.log('letters ', this.letters);
                 // TODO retry word if it can't be inserted
                 if (inserted) {
-                    this.locationIndexes = removeDuplicates(flatten(this.wordLocations));
+                    this.locationIndexes = utils.removeDuplicates(utils.flatten(this.words));
                     insertUnsuccessful = false;
                 }
                 console.log('locationIndexes', this.locationIndexes);

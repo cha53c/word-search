@@ -72,8 +72,6 @@ const PopulateGrid = {
             for(let i = 0; i < letters.length; i++) {
                 grid.letters[letterLocations[i]] = letters[i];
             }
-            console.log('adding to wordLocations', letterLocations );
-            grid.wordLocations.push(letterLocations);
             console.log('this.words', this.words);
             grid.words.find(e => e.word === word).location = letterLocations;
             console.log('words after location added ', grid.words);

@@ -26,7 +26,6 @@ export const Grid = () => {
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
         console.log('letters ', grid.letters);
-        console.log('workLocations', grid.wordLocations);
         console.log('on click candidate Letters ', selectedLetters);
         const updatedSelection = (utils.toggleLetterSelection(id, selectedLetters));
         console.log('after click candidate letters', updatedSelection);

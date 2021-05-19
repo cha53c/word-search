@@ -32,3 +32,11 @@ describe('test random letter', () => {
     });
 })
 
+describe('flatten', () => {
+    it('should flatten location arrays to single array', function () {
+        const array = [{location: [1]}, {location: [2]}, {location: [3]}]
+        const flattened = utils.flatten(array);
+        expect(flattened).toEqual([1, 2, 3])
+    });
+})
+

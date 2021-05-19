@@ -1,4 +1,5 @@
-import Grid from "./grid";
+import Grid, {flatten} from "./grid";
+
 
 describe('create blank array', () => {
     it('should return array of size rows * columns', () => {

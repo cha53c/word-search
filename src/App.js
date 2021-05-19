@@ -34,7 +34,6 @@ function App() {
     const [words, setWords] = useState(gridSetup.getWords);
     // const [grid, setGrid] = useState(Grid.setup(rows, columns, words));
     // console.log('grid ', grid );
-    // indexes from wordLocations of the words found
     const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters selected when trying to find a word
 

@@ -25,7 +25,7 @@ describe('gridSetup', () => {
         it('should insert words', function () {
             const words = ['to'];
             let grid = gridSetup.createBlankGrid(2, 2)
-            grid = gridSetup.insertWordsintoGrid(grid, words);
+            grid = gridSetup.insertWordsIntoGrid(grid, words);
             expect(grid.letters).toEqual(expect.arrayContaining(['t', 'o']));
         });
     });

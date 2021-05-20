@@ -1,5 +1,6 @@
 import utils from "./utils";
 import PopulateGrid from "./populateGrid";
+import gridSetup from "./gridSetup";
 
 // TODO change to object, with NORTH, EAST etc
 export const directions = ['N', 'E', 'S', 'W'];
@@ -12,6 +13,12 @@ const Grid = {
     size: 0,
     words: [],
     locationIndexes: [],
+    buildNewGrid: (rows, columns) => {
+        let grid = gridSetup.createBlankGrid(rows, columns);
+        grid = gridSetup.insertWordsIntoGrid(grid, gridSetup.getWords());
+        grid = gridSetup.fillBlanks(grid);
+        return grid;
+    },
     setup(rows, columns, words) {
         this.words = words.map(word => {
             return {word: word, location: [], found: false}

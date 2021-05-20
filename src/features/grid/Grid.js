@@ -10,7 +10,7 @@ export const Grid = () => {
     const MATCHED = 'matched';
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
-
+    // TODO reset these hooks for new game
     const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters selected when trying to find a word
     const [selectedLetters, setSelectedLetters] = useState([]);
@@ -58,7 +58,6 @@ export const Grid = () => {
     };
 
     const numberStatus = (number) => {
-
         const candidate = selectedLetters.includes(number);
         const matched = matchedLetters.includes(number);
         if (matched && candidate) {

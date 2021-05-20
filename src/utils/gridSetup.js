@@ -27,7 +27,7 @@ const gridSetup = {
         });
         return grid;
     },
-    insertWordsintoGrid:  (grid, words) => {
+    insertWordsIntoGrid:  (grid, words) => {
         // TODO iterate over list of words
         grid.words = words.map(word => {
             return {word: word, location: [], found: false}

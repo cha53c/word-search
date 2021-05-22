@@ -1,4 +1,8 @@
 const alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase();
+const MATCHED = 'matched';
+const CANDIDATE = 'candidate';
+const AVAILABLE = 'available';
+
 const utils = {
     range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
     random: (min, max) => min + Math.floor(Math.random() * (max - min + 1)),
@@ -13,6 +17,17 @@ const utils = {
             updatedSelection.push(id);
         }
         return updatedSelection;
+    },
+    numberStatus: (number, selectedLetters, matchedLetters) => {
+        const selected = selectedLetters.includes(number);
+        const matched = matchedLetters.includes(number);
+        if (selected) {
+            return CANDIDATE
+        }
+        if (matched && !selected) {
+            return MATCHED;
+        }
+        return AVAILABLE
     },
     randomLetter: () => alphabet[Math.floor(Math.random() * alphabet.length)]
 };

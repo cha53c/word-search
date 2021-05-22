@@ -40,3 +40,24 @@ describe('flatten', () => {
     });
 })
 
+describe('numberStatus', () => {
+    const selected = [1,2];
+    const found = [2,3];
+    const SELECTED_NOT_FOUND = 1;
+    const FOUND_AND_SELECTED = 2;
+    const FOUND_NOT_SELECTED = 3;
+    const NOT_FOUND_NOT_SELECTED = 4;
+    it('should be candidate if not found but selected', function () {
+        expect(utils.numberStatus(SELECTED_NOT_FOUND, selected, found)).toEqual('candidate');
+    });
+    it('should be candidate if found and selected', function () {
+        expect(utils.numberStatus(FOUND_AND_SELECTED, selected, found)).toEqual('candidate');
+    });
+    it('should be matched if already found, but not selected', function () {
+        expect(utils.numberStatus(FOUND_NOT_SELECTED, selected, found)).toEqual('matched');
+    });
+    it('should be available if not found and not selected', function () {
+        expect(utils.numberStatus(NOT_FOUND_NOT_SELECTED, selected, found)).toEqual('available');
+    });
+});
+

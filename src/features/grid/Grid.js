@@ -11,7 +11,6 @@ export const Grid = () => {
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
     // TODO reset these hooks for new game
-    const [foundWordIndexes, setFoundWordIndexes] = useState([]);
     // letters selected when trying to find a word
     const [selectedLetters, setSelectedLetters] = useState([]);
     // contains the id of the letters for words found
@@ -46,10 +45,7 @@ export const Grid = () => {
                     dispatch(wordFound(wordData));
                     const newMatchedLetters = matchedLetters.concat(selectedLetters);
                     setMatchedLetters(newMatchedLetters);
-                    const newFoundWordIndexes = foundWordIndexes.concat(index);
-                    setFoundWordIndexes(newFoundWordIndexes);
                     console.log('words length', words.length);
-                    console.log('foundIndexes', newFoundWordIndexes.length);
                     console.log('matchedLetters', newMatchedLetters);
                 }
                 setSelectedLetters([]);
@@ -57,26 +53,11 @@ export const Grid = () => {
         });
     };
 
-    const numberStatus = (number) => {
-        const candidate = selectedLetters.includes(number);
-        const matched = matchedLetters.includes(number);
-        if (matched && candidate) {
-            return CANDIDATE;
-        }
-        if (matched && !candidate) {
-            return MATCHED;
-        }
-        if (!matched && candidate) {
-            return CANDIDATE;
-        }
-        return AVAILABLE
-    };
-
     const gridItems = grid.letters.map((letter, index) =>
         <GridLetter key={index}
                     letter={letter}
                     id={index}
-                    status={numberStatus(index)}
+                    status={utils.letterStatus(index, selectedLetters, matchedLetters)}
                     onClick={onLetterClick}
         />
     )

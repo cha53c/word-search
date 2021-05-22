@@ -48,16 +48,16 @@ describe('numberStatus', () => {
     const FOUND_NOT_SELECTED = 3;
     const NOT_FOUND_NOT_SELECTED = 4;
     it('should be candidate if not found but selected', function () {
-        expect(utils.numberStatus(SELECTED_NOT_FOUND, selected, found)).toEqual('candidate');
+        expect(utils.letterStatus(SELECTED_NOT_FOUND, selected, found)).toEqual('candidate');
     });
     it('should be candidate if found and selected', function () {
-        expect(utils.numberStatus(FOUND_AND_SELECTED, selected, found)).toEqual('candidate');
+        expect(utils.letterStatus(FOUND_AND_SELECTED, selected, found)).toEqual('candidate');
     });
     it('should be matched if already found, but not selected', function () {
-        expect(utils.numberStatus(FOUND_NOT_SELECTED, selected, found)).toEqual('matched');
+        expect(utils.letterStatus(FOUND_NOT_SELECTED, selected, found)).toEqual('matched');
     });
     it('should be available if not found and not selected', function () {
-        expect(utils.numberStatus(NOT_FOUND_NOT_SELECTED, selected, found)).toEqual('available');
+        expect(utils.letterStatus(NOT_FOUND_NOT_SELECTED, selected, found)).toEqual('available');
     });
 });
 

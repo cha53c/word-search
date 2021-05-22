@@ -18,7 +18,7 @@ const utils = {
         }
         return updatedSelection;
     },
-    numberStatus: (number, selectedLetters, matchedLetters) => {
+    letterStatus: (number, selectedLetters, matchedLetters) => {
         const selected = selectedLetters.includes(number);
         const matched = matchedLetters.includes(number);
         if (selected) {

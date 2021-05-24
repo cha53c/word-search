@@ -21,12 +21,6 @@ const gridSlice = createSlice({
                 state.gameComplete = true;
             }
         },
-        letterSelected: (state, action) => {
-            const location = action.payload.location;
-            const selectedLocations = state.selectedLocations;
-            state.selectedLocations = utils.toggleLetterSelection(location, selectedLocations);
-            console.log('letterSelected', location, state.selectedLocations);
-        },
         setSelectedLetters: (state, action) => {
             state.selectedLocations = action.payload.updatedLocations;
         },
@@ -49,5 +43,5 @@ const gridSlice = createSlice({
     }
 })
 
-export const {letterSelected, resetSelectedLetters, setSelectedLetters, wordFound, setNewState} = gridSlice.actions;
+export const {resetSelectedLetters, setSelectedLetters, wordFound, setNewState} = gridSlice.actions;
 export default gridSlice.reducer;

@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {current} from '@reduxjs/toolkit'
 import Grid from "../../utils/grid";
-import gridSetup from "../../utils/gridSetup";
+import utils from "../../utils/utils";
 
 
 const gridSlice = createSlice({
@@ -21,6 +21,19 @@ const gridSlice = createSlice({
                 state.gameComplete = true;
             }
         },
+        letterSelected: (state, action) => {
+            const location = action.payload.location;
+            const selectedLocations = state.selectedLocations;
+            state.selectedLocations = utils.toggleLetterSelection(location, selectedLocations);
+            console.log('letterSelected', location, state.selectedLocations);
+        },
+        setSelectedLetters: (state, action) => {
+            state.selectedLocations = action.payload.updatedLocations;
+        },
+        resetSelectedLetters: (state) => {
+            state.selectedLocations = [];
+            console.log('resetSelectedLetters', state.selectedLocations);
+        },
         setNewState: (state, action) => {
             console.log('You are setting the grid state');
             const newGrid = Grid.buildNewGrid(5, 5);
@@ -31,9 +44,10 @@ const gridSlice = createSlice({
             state.gameComplete = false;
             state.words = newGrid.words;
             state.locationIndexes = newGrid.locationIndexes;
+            state.selectedLocations = [];
         }
     }
 })
 
-export const {wordFound, setNewState} = gridSlice.actions;
+export const {letterSelected, resetSelectedLetters, setSelectedLetters, wordFound, setNewState} = gridSlice.actions;
 export default gridSlice.reducer;

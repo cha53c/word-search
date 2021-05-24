@@ -16,6 +16,7 @@ const gridSetup = {
         grid.columns = columns;
         grid.size = rows * columns; // TODO do I need this? can it just be calculated each time?
         grid.letters = new Array(rows * columns).fill('-');
+        grid.selectedLocations = [];
         grid.gameComplete = false;
         grid.words = [];
         grid.locationIndexes = [];

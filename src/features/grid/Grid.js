@@ -3,8 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import GridLetter from "../../components/GridLetter";
 import utils from "../../utils/utils";
 import matching from "../../utils/matching";
-import {wordFound} from "./gridSlice";
+import {wordFound, setNewState, letterSelected, setSelectedLetters, resetSelectedLetters} from "./gridSlice";
 import gridSetup from "../../utils/gridSetup";
+
+// export const startNewGame = (dispatch) => {
+//     console.log('start new game');
+//     // dispatch(setNewState())
+// }
 
 export const Grid = () => {
     const MATCHED = 'matched';
@@ -12,23 +17,32 @@ export const Grid = () => {
     const AVAILABLE = 'available';
     // TODO reset these hooks for new game
     // letters selected when trying to find a word
-    const [selectedLetters, setSelectedLetters] = useState([]);
+    // const [selectedLetters, setSelectedLetters] = useState([]);
     // contains the id of the letters for words found
     const [matchedLetters, setMatchedLetters] = useState([]);
 
     const dispatch = useDispatch();
+    // TODO can I selected only what's needed from the grid
     const grid = useSelector(state => state.grid);
     console.log('grid letters', grid.letters);
     // TODO change to use word objects from wordSlice. Is this still correct???
     const words = gridSetup.getWords;
 
+    const startNewGame = (dispatch) => {
+        console.log('start new game');
+        // dispatch(setNewState())
+    }
+
     const onLetterClick = (id, currentStatus) => {
         console.log('id ', id);
         console.log('letters ', grid.letters);
-        console.log('on click candidate Letters ', selectedLetters);
-        const updatedSelection = (utils.toggleLetterSelection(id, selectedLetters));
+        // console.log('on click candidate Letters ', selectedLetters);
+        // dispatch(letterSelected({location: id}));
+        // const updatedSelection = (utils.toggleLetterSelection(id, selectedLetters));
+        const updatedSelection = (utils.toggleLetterSelection(id, grid.selectedLocations));
         console.log('after click candidate letters', updatedSelection);
-        setSelectedLetters(updatedSelection);
+        // setSelectedLetters(updatedSelection);
+        dispatch(setSelectedLetters({updatedLocations: updatedSelection}))
         detectMatches(updatedSelection);
     };
 
@@ -48,7 +62,9 @@ export const Grid = () => {
                     console.log('words length', words.length);
                     console.log('matchedLetters', newMatchedLetters);
                 }
-                setSelectedLetters([]);
+                // setSelectedLetters([]);
+                // TODO use setSelectedLetters insstead
+                dispatch(resetSelectedLetters());
             }
         });
     };
@@ -57,7 +73,9 @@ export const Grid = () => {
         <GridLetter key={index}
                     letter={letter}
                     id={index}
-                    status={utils.letterStatus(index, selectedLetters, matchedLetters)}
+                    // status={utils.letterStatus(index, selectedLetters, matchedLetters)}
+                    // TODO determine status on gridLetter component
+                    status={utils.letterStatus(index, grid.selectedLocations, matchedLetters)}
                     onClick={onLetterClick}
         />
     )

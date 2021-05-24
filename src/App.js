@@ -1,15 +1,10 @@
 import './App.css';
 // TODO clean up unused code
 import React, {useState} from 'react';
-import { useDispatch } from "react-redux";
 import { wordFound } from "./features/words/wordsSlice";
-
-import GridLetter from "./components/GridLetter";
 import Counter from "./components/Counter";
 import PlayAgain from "./components/PlayAgain";
-
 import utils from "./utils/utils";
-import matching from "./utils/matching";
 import gridSetup from "./utils/gridSetup";
 import grid from "./utils/grid";
 import {WordsList} from "./features/words/WordsList";
@@ -35,12 +30,6 @@ function App() {
     // const [grid, setGrid] = useState(Grid.setup(rows, columns, words));
     // console.log('grid ', grid );
     const [foundWordIndexes, setFoundWordIndexes] = useState([]);
-    // letters selected when trying to find a word
-
-
-
-
-
 
     return (
         <div className="game">

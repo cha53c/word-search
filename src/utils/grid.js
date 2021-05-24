@@ -13,6 +13,7 @@ const Grid = {
     size: 0,
     words: [],
     locationIndexes: [],
+    selectedLocations: [],
     buildNewGrid: (rows, columns) => {
         let grid = gridSetup.createBlankGrid(rows, columns);
         grid = gridSetup.insertWordsIntoGrid(grid, gridSetup.getWords());

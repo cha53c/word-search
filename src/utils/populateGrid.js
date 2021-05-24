@@ -1,3 +1,5 @@
+import utils from "./utils";
+
 const PopulateGrid = {
     getRandomLocation(gridSize) {
         return Math.floor(Math.random() * gridSize);
@@ -79,7 +81,8 @@ const PopulateGrid = {
         }
     },
     collisionDetections(grid, letter, location) {
-        if (grid.locationIndexes.includes(location)) {
+        const locationIndexes = utils.removeDuplicates(utils.flatten(grid.words));
+        if (locationIndexes.includes(location)) {
             //if the letters are the same then it's not a collision
             return letter !== grid.letters[location];
         }

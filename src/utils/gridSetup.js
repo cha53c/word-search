@@ -1,10 +1,7 @@
-import Grid from "./grid";
 import {directions} from "./grid"
 import PopulateGrid from "./populateGrid";
 import utils from "./utils";
 
-// const directions = ['N', 'E', 'S', 'W'];
-// const rows = 3, columns = 3;
 const words = ["FOX", "BOX", "LOG", "FIG"];
 
 const gridSetup = {
@@ -19,7 +16,6 @@ const gridSetup = {
         grid.selectedLocations = [];
         grid.gameComplete = false;
         grid.words = [];
-        grid.locationIndexes = [];
         return grid;
     },
     setWords: (grid, words) => {
@@ -28,7 +24,7 @@ const gridSetup = {
         });
         return grid;
     },
-    insertWordsIntoGrid:  (grid, words) => {
+    insertWordsIntoGrid: (grid, words) => {
         // TODO iterate over list of words
         grid.words = words.map(word => {
             return {word: word, location: [], found: false}
@@ -58,7 +54,6 @@ const gridSetup = {
                 console.log('letters ', grid.letters);
                 // TODO retry word if it can't be inserted
                 if (inserted) {
-                    grid.locationIndexes = utils.removeDuplicates(utils.flatten(grid.words));
                     insertUnsuccessful = false;
                 }
                 console.log('locationIndexes', grid.locationIndexes);
@@ -67,8 +62,9 @@ const gridSetup = {
         return grid;
     },
     fillBlanks: (grid) => {
+        const locationIndexes = utils.removeDuplicates(utils.flatten(grid.words));
         grid.letters = grid.letters
-            .map((e, i) => grid.locationIndexes.includes(i) ? e : utils.randomLetter());
+            .map((e, i) => locationIndexes.includes(i) ? e : utils.randomLetter());
         console.log('letters after filling blanks', grid.letters);
         return grid;
     },

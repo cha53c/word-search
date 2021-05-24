@@ -1,12 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {current} from '@reduxjs/toolkit'
 import Grid from "../../utils/grid";
-import utils from "../../utils/utils";
 
 
 const gridSlice = createSlice({
     name: 'grid',
-    // initialState: Grid.setup(5,5, gridSetup.getWords()),
     initialState: Grid.buildNewGrid(5, 5),
     reducers: {
         wordFound: (state, action) => {

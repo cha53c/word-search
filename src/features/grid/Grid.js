@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import GridLetter from "../../components/GridLetter";
 import utils from "../../utils/utils";
@@ -7,15 +7,10 @@ import {wordFound, setSelectedLetters, resetSelectedLetters} from "./gridSlice";
 import gridSetup from "../../utils/gridSetup";
 
 export const Grid = () => {
-    const MATCHED = 'matched';
-    const CANDIDATE = 'candidate';
-    const AVAILABLE = 'available';
-
     const dispatch = useDispatch();
     // TODO can I selected only what's needed from the grid
     const grid = useSelector(state => state.grid);
     console.log('grid letters', grid.letters);
-    // TODO change to use word objects from wordSlice. Is this still correct???
     const words = gridSetup.getWords;
 
 
@@ -30,7 +25,6 @@ export const Grid = () => {
 
     const detectMatches = (selectedLetters) => {
         console.log('selectedLetters', selectedLetters);
-        console.log('locationIndex', grid.locationIndexes);
         grid.words.forEach((wordData, index) => {
             console.log('wordData ', wordData);
             console.log('selection for matching', selectedLetters);

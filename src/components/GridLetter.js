@@ -3,7 +3,6 @@ import {useSelector} from "react-redux";
 import utils from '../utils/utils'
 
 
-
 // Color Theme
 const colors = {
     available: 'white',
@@ -20,9 +19,8 @@ const GridLetter = props => {
     const status = utils.letterStatus(props.id, selectedLocations, matchedLocations);
     return (
         <button className="number"
-            // style={{backgroundColor: colors[props.status]}}
                 style={{backgroundColor: colors[status]}}
-                onClick={() => props.onClick(props.id, props.status)}>{props.letter}</button>
+                onClick={() => props.onClick(props.id)}>{props.letter}</button>
     );
 }
 

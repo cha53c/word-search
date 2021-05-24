@@ -11,9 +11,6 @@ export const Grid = () => {
     const CANDIDATE = 'candidate';
     const AVAILABLE = 'available';
 
-    // contains the id of the letters for words found
-    const [matchedLetters, setMatchedLetters] = useState([]);
-
     const dispatch = useDispatch();
     // TODO can I selected only what's needed from the grid
     const grid = useSelector(state => state.grid);
@@ -42,10 +39,7 @@ export const Grid = () => {
                 console.log('grid.words', grid.words);
                 if (wordData.found === false) {
                     dispatch(wordFound(wordData));
-                    const newMatchedLetters = matchedLetters.concat(selectedLetters);
-                    setMatchedLetters(newMatchedLetters);
                     console.log('words length', words.length);
-                    console.log('matchedLetters', newMatchedLetters);
                 }
                 // TODO use setSelectedLetters instead?
                 dispatch(resetSelectedLetters());
@@ -57,8 +51,6 @@ export const Grid = () => {
         <GridLetter key={index}
                     letter={letter}
                     id={index}
-            // TODO determine status on gridLetter component
-                    status={utils.letterStatus(index, grid.selectedLocations, matchedLetters)}
                     onClick={onLetterClick}
         />
     )

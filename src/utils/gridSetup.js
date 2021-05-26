@@ -56,7 +56,6 @@ const gridSetup = {
                 if (inserted) {
                     insertUnsuccessful = false;
                 }
-                console.log('locationIndexes', grid.locationIndexes);
             }
         }
         return grid;

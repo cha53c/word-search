@@ -37,11 +37,15 @@ describe('gridSetup', () => {
             expect(grid.letters).toEqual(expect.not.arrayContaining(['-']));
         });
         it('should fill blanks ignoring populated locations', function () {
-            let grid = gridSetup.createBlankGrid(3, 3);
+            const rows = 3;
+            const columns = 3;
+            let grid = gridSetup.createBlankGrid(rows, columns);
             grid.letters[0] = 'A';
-            grid.locationIndexes.push(0);
+            grid.words = [{found: false, location: [0], word: 'A'}];
             grid = gridSetup.fillBlanks(grid);
-            expect(grid.letters).toEqual(expect.arrayContaining(['A']));
+            expect(grid.letters).toEqual(expect.not.arrayContaining(['-']));
+            expect(grid.letters[0]).toEqual('A');
+            expect(grid.letters.length).toEqual(rows*columns);
         });
     });
 });

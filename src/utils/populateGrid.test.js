@@ -79,17 +79,17 @@ describe('checkDirections', function () {
 describe('getNextDirection', () => {
     const directions = ['N', 'E', "S", 'W'];
     it('should return direction W', function () {
-        const grid = Grid.createBlankGrid(2, 4);
+        const grid = Grid.buildNewGrid(2, 4);
         const direction = PopulateGrid.findNextDirection(grid, 0, 'fox', directions);
         expect(direction).toEqual('E');
     });
     it('should return false', function () {
-        const grid = Grid.createBlankGrid(2, 2);
+        const grid = Grid.buildNewGrid(2, 2);
         const direction = PopulateGrid.findNextDirection(grid, 0, 'fox', directions);
         expect(direction).toBeFalsy();
     });
     it('should return truthy', function () {
-        const grid = Grid.createBlankGrid(7, 7);
+        const grid = Grid.buildNewGrid(7, 7);
         const direction = PopulateGrid.findNextDirection(grid, 17, 'fox', directions);
         expect(direction).toBeTruthy();
     });
@@ -97,7 +97,7 @@ describe('getNextDirection', () => {
     describe('calculateNextPosition', () => {
         let grid;
         beforeEach(() => {
-            grid = Grid.createBlankGrid(3, 3);
+            grid = Grid.buildNewGrid(3, 3);
         });
         it('should subtract column count from current position for direction N', function () {
             const position = PopulateGrid.calculateNextPosition(grid, 'N', 4);
@@ -117,10 +117,10 @@ describe('getNextDirection', () => {
         });
     })
 
-    describe.only('insertWord', () => {
+    describe('insertWord', () => {
         let grid;
         beforeEach(() => {
-            grid = Grid.createBlankGrid(3, 3);
+            grid = Grid.buildNewGrid(3, 3);
         });
 
         it('should insert word at start of array', function () {
@@ -154,7 +154,7 @@ describe('getNextDirection', () => {
 describe('collisionDetection', () => {
     let grid;
     beforeEach(() => {
-        grid = Grid.createBlankGrid(3, 3);
+        grid = Grid.buildNewGrid(3, 3);
     });
     it('should return false when there are no letter in location', function () {
         grid.locationIndexes = [0, 1, 2];

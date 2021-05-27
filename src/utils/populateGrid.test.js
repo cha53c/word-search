@@ -71,7 +71,15 @@ describe('checkDirections', function () {
         expect(directionOK).toBeTruthy();
     });
     it('should return false for direction S', function () {
-        const directionOK = PopulateGrid.checkDirections('S', 3, 3, 4, 3);
+        const directionOK = PopulateGrid.checkDirections('S', 3, 3, 0, 4);
+        expect(directionOK).toBeFalsy();
+    });
+    it('should return true for direction NE is within grid boundary', function () {
+        const directionOK = PopulateGrid.checkDirections('NE', 3, 3, 6, 3);
+        expect(directionOK).toBeTruthy();
+    });
+    it('should return false for direction NE out of grid boundary', function () {
+        const directionOK = PopulateGrid.checkDirections('NE', 3, 3, 4, 3);
         expect(directionOK).toBeFalsy();
     });
 })
@@ -115,6 +123,15 @@ describe('getNextDirection', () => {
             const position = PopulateGrid.calculateNextPosition(grid, 'W', 2);
             expect(position).toEqual(1);
         });
+        it('should find next position NE', function () {
+            const position = PopulateGrid.calculateNextPosition(grid, 'NE', 6);
+            expect(position).toEqual(4);
+        });
+        it('should find next position NW', function () {
+            const position = PopulateGrid.calculateNextPosition(grid, 'NW', 8);
+            expect(position).toEqual(4);
+        });
+
     })
 
     describe('insertWord', () => {

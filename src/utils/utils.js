@@ -29,7 +29,8 @@ const utils = {
         }
         return AVAILABLE
     },
-    randomLetter: () => alphabet[Math.floor(Math.random() * alphabet.length)]
+    randomLetter: () => alphabet[Math.floor(Math.random() * alphabet.length)],
+    integerDivision: (numerator, denominator) => Math.floor(numerator/denominator),
 };
 
 

@@ -1,6 +1,12 @@
 import utils from './utils'
 
 describe('utils', () => {
+    describe('integerDivision', () => {
+        it('should integer not fraction', function () {
+            expect(utils.integerDivision(3, 2)).toEqual(1);
+        });
+    })
+
     describe('test letter  selection', () => {
         it('should return new array', () => {
             const selected = [1, 2];
@@ -63,3 +69,5 @@ describe('utils', () => {
         });
     });
 });
+
+

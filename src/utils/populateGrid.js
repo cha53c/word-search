@@ -1,4 +1,6 @@
 import utils from "./utils";
+import populateGridUtils from "./populateGridUtils";
+
 
 const PopulateGrid = {
     getRandomLocation(gridSize) {
@@ -9,7 +11,8 @@ const PopulateGrid = {
         // directions can be N E S W
         // N writes from bottom to top. E writes left to right, S top to bottom, W right to left
         // TODO add diagonals NE, SE, SW, NW
-        const directions = ['N', 'E', "S", 'W'];
+        const directions = ['N', 'NE', 'E', "S", 'W'];
+        // const directions = ['NE'];
         const availableDirections = directions.filter(d => !failedDirections.includes(d));
         return availableDirections;
     },
@@ -91,22 +94,35 @@ const PopulateGrid = {
         switch (direction) {
             case 'N':
                 return currentPosition - grid.columns;
+            case 'NE':
+                return currentPosition - (grid.columns - 1);
             case 'E':
                 return currentPosition + 1;
             case 'S':
                 return currentPosition + grid.columns;
             case 'W':
                 return currentPosition - 1;
-
+            case 'NW':
+                return currentPosition - grid.columns -1
         }
     },
+    // checks the word does not go outside the grid
     checkDirections(direction, rows, columns, position, wordLen) {
+        let wordEnd;
         switch (direction) {
             case 'N':
                 if (position - ((wordLen - 1) * columns) >= 0) {
                     return true;
                 }
                 return false;
+            case 'NE':
+                //TODO calculate top & right boundary
+                wordEnd = position - (columns - 1) * (wordLen - 1);
+                // wordEnd = position - ((rows - 1) * (populateGridUtils.currentRow(position, rows) -1));
+                if(wordEnd <= 0 ){
+                    return false;
+                }
+                return true;
             case 'E':
                 const rowEnd = position - (position % columns) + (columns - 1);
                 if (position + (wordLen - 1) > rowEnd) {
@@ -115,18 +131,21 @@ const PopulateGrid = {
                 return true;
             case 'S':
                 // TODO which way of doing this is better
-                if (position + ((wordLen - 1) * columns) > (rows * columns) - 1) {
-                    return false;
-                }
-                // const wordEnd = position + ((wordLen - 1) * columns);
-                // const columnEnd = position + ((rows - (Math.floor(position / rows) + 1)) * columns);
-                // if (wordEnd > columnEnd) {
-                //     return false
+                // this is less explicit, but simpler
+                // if (position + ((wordLen - 1) * columns) > (rows * columns) - 1) {
+                //     return false;
                 // }
+                wordEnd = position + ((wordLen - 1) * columns);
+                // const columnEnd = position + ((rows - (Math.floor(position / rows) + 1)) * columns);
+                const columnEnd = position + (populateGridUtils.currentRow(position, rows) * columns);
+                if (wordEnd > columnEnd) {
+                    return false
+                }
                 return true;
             case 'W':
                 const rowStart = position - (position % columns);
-                if (position - (wordLen - 1) < rowStart) {
+                wordEnd = position - (wordLen - 1);
+                if (wordEnd < rowStart) {
                     return false
                 }
                 return true;

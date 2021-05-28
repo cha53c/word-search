@@ -1,7 +1,8 @@
 import gridSetup from "./gridSetup";
 
 // TODO change to object, with NORTH, EAST etc
-export const directions = ['N', 'E', 'S', 'W'];
+// export const directions = ['N', 'E', 'S', 'W'];
+export const directions = ['NW', 'NE'];
 
 const Grid = {
     buildNewGrid: (rows, columns) => {

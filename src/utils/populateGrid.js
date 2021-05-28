@@ -11,8 +11,9 @@ const PopulateGrid = {
         // directions can be N E S W
         // N writes from bottom to top. E writes left to right, S top to bottom, W right to left
         // TODO add diagonals NE, SE, SW, NW
-        const directions = ['N', 'NE', 'E', "S", 'W'];
-        // const directions = ['NE'];
+        // TODO why is this defined here and on grid
+        // const directions = ['N', 'NE', 'E', "S", 'W', 'NW'];
+        const directions = ['NW', 'NE'];
         const availableDirections = directions.filter(d => !failedDirections.includes(d));
         return availableDirections;
     },
@@ -38,13 +39,13 @@ const PopulateGrid = {
         }
         return false;
     },
-    insertWord(grid, position, direction, word) {
+        insertWord(grid, position, direction, word) {
         console.log('insertWord', word);
         const letters = [...word];
         let letterLocations = [];
         let currentPosition = position;
         let collision = false;
-        for(let i = 0; i < letters.length; i++){
+        for (let i = 0; i < letters.length; i++) {
             if (this.collisionDetections(grid, letters[i], currentPosition)) {
                 collision = true;
                 letterLocations = [];
@@ -74,7 +75,7 @@ const PopulateGrid = {
             console.log('no collisions');
             console.log('adding letters to grid');
             // TODO use functional method instead of for loop
-            for(let i = 0; i < letters.length; i++) {
+            for (let i = 0; i < letters.length; i++) {
                 grid.letters[letterLocations[i]] = letters[i];
             }
             console.log('this.words', grid.words);
@@ -103,7 +104,7 @@ const PopulateGrid = {
             case 'W':
                 return currentPosition - 1;
             case 'NW':
-                return currentPosition - grid.columns -1
+                return currentPosition - (grid.columns + 1);
         }
     },
     // checks the word does not go outside the grid
@@ -119,7 +120,7 @@ const PopulateGrid = {
                 //TODO calculate top & right boundary
                 wordEnd = position - (columns - 1) * (wordLen - 1);
                 // wordEnd = position - ((rows - 1) * (populateGridUtils.currentRow(position, rows) -1));
-                if(wordEnd <= 0 ){
+                if (wordEnd <= 0) {
                     return false;
                 }
                 return true;
@@ -147,6 +148,13 @@ const PopulateGrid = {
                 wordEnd = position - (wordLen - 1);
                 if (wordEnd < rowStart) {
                     return false
+                }
+                return true;
+            case 'NW':
+                wordEnd = position - (columns + 1) * (wordLen - 1);
+                // wordEnd = position - ((rows - 1) * (populateGridUtils.currentRow(position, rows) -1));
+                if (wordEnd < 0) {
+                    return false;
                 }
                 return true;
         }

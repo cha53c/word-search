@@ -31,6 +31,11 @@ const utils = {
     },
     randomLetter: () => alphabet[Math.floor(Math.random() * alphabet.length)],
     integerDivision: (numerator, denominator) => Math.floor(numerator/denominator),
+    //TODO write unit tests
+    shuffle: (unshuffled) => unshuffled
+        .map((a) => ({sort: Math.random(), value: a}))
+        .sort((a, b) => a.sort - b.sort)
+        .map((a) => a.value),
 };
 
 

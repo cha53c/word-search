@@ -1,21 +1,14 @@
 import utils from "./utils";
 import populateGridUtils from "./populateGridUtils";
-
-
+// N writes from bottom to top. E writes left to right, S top to bottom, W right to left
+const directions = ['N', 'NE', 'E', 'SE', "S", 'SW', 'W', 'NW'];
 const PopulateGrid = {
     getRandomLocation(gridSize) {
         return Math.floor(Math.random() * gridSize);
-        // return availableLocations[`Math.floor(Math.random() * availableLocations.length)];
     },
     getAvailableDirections(failedDirections = []) {
-        // directions can be N E S W
-        // N writes from bottom to top. E writes left to right, S top to bottom, W right to left
-        // TODO add diagonals NE, SE, SW, NW
-        // TODO why is this defined here and on grid
-        // const directions = ['N', 'NE', 'E', "S", 'W', 'NW'];
-        const directions = ['NW', 'NE'];
-        const availableDirections = directions.filter(d => !failedDirections.includes(d));
-        return availableDirections;
+
+        return directions.filter(d => !failedDirections.includes(d));
     },
     getRandomDirection(directions) {
         if (directions.length === 1) {
@@ -24,7 +17,7 @@ const PopulateGrid = {
         return directions[Math.floor(Math.random() * directions.length)];
     },
     // TODO write more tests for this
-    findNextDirection(grid, position, word, directions) {
+    findNextDirection(grid, position, word) {
         const failedDirections = [];
         let remainingDirections = directions;
         // TODO change to forEach
@@ -54,7 +47,6 @@ const PopulateGrid = {
                 break;
             }
             letterLocations.push(currentPosition);
-            // grid.letters[currentPosition] = letters[i];
             currentPosition = this.calculateNextPosition(grid, direction, currentPosition);
         }
         // letters.forEach(letter => {
@@ -99,8 +91,12 @@ const PopulateGrid = {
                 return currentPosition - (grid.columns - 1);
             case 'E':
                 return currentPosition + 1;
+            case 'SE':
+                return currentPosition + (grid.columns + 1)
             case 'S':
                 return currentPosition + grid.columns;
+            case 'SW':
+                return currentPosition + (grid.columns -1);
             case 'W':
                 return currentPosition - 1;
             case 'NW':
@@ -130,6 +126,12 @@ const PopulateGrid = {
                     return false;
                 }
                 return true;
+            case 'SE':
+                wordEnd = position + (columns + 1) * (wordLen -1)
+                if(wordEnd > columns * rows){
+                    return false;
+                }
+                return true;
             case 'S':
                 // TODO which way of doing this is better
                 // this is less explicit, but simpler
@@ -143,6 +145,12 @@ const PopulateGrid = {
                     return false
                 }
                 return true;
+            case 'SW':
+                wordLen = position + (columns - 1) * (wordLen -1);
+                if(wordEnd > columns * rows){
+                    return false;
+                }
+                return true;
             case 'W':
                 const rowStart = position - (position % columns);
                 wordEnd = position - (wordLen - 1);
@@ -152,7 +160,6 @@ const PopulateGrid = {
                 return true;
             case 'NW':
                 wordEnd = position - (columns + 1) * (wordLen - 1);
-                // wordEnd = position - ((rows - 1) * (populateGridUtils.currentRow(position, rows) -1));
                 if (wordEnd < 0) {
                     return false;
                 }

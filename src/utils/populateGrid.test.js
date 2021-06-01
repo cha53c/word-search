@@ -173,19 +173,19 @@ describe('collisionDetection', () => {
     beforeEach(() => {
         grid = Grid.buildNewGrid(3, 3);
     });
-    it('should return false when there are no letter in location', function () {
-        grid.locationIndexes = [0, 1, 2];
+    it('should return false when there are no letters in location', function () {
+        grid.words = [{word: 'poo', location: [0, 1, 2], found: false }];
         const collision = PopulateGrid.collisionDetections(grid, 'i', 3);
         expect(collision).toBeFalsy();
     });
     it('should return false when there is a letter in location but it is the same letter', function () {
-        grid.locationIndexes = [0, 1, 2];
+        grid.words = [{word: 'poo', location: [0, 1, 2], found: false }];
         grid.letters[1] = 'i';
         const collision = PopulateGrid.collisionDetections(grid, 'i', 1);
         expect(collision).toBeFalsy();
     });
     it('should return true when there is a letter in location which does not match the new letter', function () {
-        grid.locationIndexes = [0, 1, 2];
+        grid.words = [{word: 'poo', location: [0, 1, 2], found: false }];
         grid.letters[1] = 'b';
         const collision = PopulateGrid.collisionDetections(grid, 'i', 1);
         expect(collision).toBeTruthy();

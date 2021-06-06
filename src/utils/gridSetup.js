@@ -1,8 +1,10 @@
-import {directions} from "./grid"
+// import {directions} from "./grid"
 import PopulateGrid from "./populateGrid";
+import populateGridUtils from "./populateGridUtils";
 import utils from "./utils";
 
 const words = ["FOX", "BOX", "LOG", "FIG"];
+const directions = ['N', 'NE', 'E', 'SE', "S", 'SW', 'W', 'NW'];
 
 const gridSetup = {
     getWords: () => words,
@@ -31,30 +33,42 @@ const gridSetup = {
         });
         console.log('populateWords');
         const size = grid.rows * grid.columns;
+        console.log('grid size', size);
+        const randomLocations = populateGridUtils.getRandomLocations(size);
         for (let i = 0; i < words.length; i++) {
             let word = words[i];
             let directionFound = false;
             let nextLocation;
-            let nextDirection;
+            let nextDirection = false;
             let insertUnsuccessful = true;
-            let attempts = 0;
-            while (insertUnsuccessful && (attempts++ < size)) {
-                console.log('attempts', attempts);
-                while (directionFound === false) {
-                    console.log('grid size', size);
-                    nextLocation = PopulateGrid.getRandomLocation(size);
-                    console.log('nextLocation', nextLocation);
-                    nextDirection = PopulateGrid.findNextDirection(grid, nextLocation, word, directions);
+            let inserted = false;
+            // let attempts = 0;
+            console.log('word ', word);
+            // while (insertUnsuccessful && (attempts++ < size)) {
+            while (insertUnsuccessful && (randomLocations.length > 0)) {
+                // console.log('attempts', attempts);
+                console.log('randomLocations', randomLocations);
+                nextLocation = randomLocations.pop();
+                console.log('nextLocation', nextLocation);
+                let possibleDirections = utils.shuffle(directions);
+                while (directionFound === false && possibleDirections.length > 0) {
+                    console.log('possibleDirections ', possibleDirections);
+                    nextDirection = PopulateGrid.findNextDirection(grid, nextLocation, word, possibleDirections);
                     console.log('nextDirection', nextDirection);
                     directionFound = nextDirection;
-                }
-                directionFound = false;
-                console.log('word ', word);
-                let inserted = PopulateGrid.insertWord(grid, nextLocation, nextDirection, word);
-                console.log('letters ', grid.letters);
-                // TODO retry word if it can't be inserted
-                if (inserted) {
-                    insertUnsuccessful = false;
+                    if(nextDirection){
+                        inserted = PopulateGrid.insertWord(grid, nextLocation, nextDirection, word);
+                    }
+                    // console.log('letters ', grid.letters);
+                    // TODO retry word if it can't be inserted in this direction
+                    if (inserted) {
+                        insertUnsuccessful = false;
+                        directionFound = true;
+                    } else {
+                        directionFound = false;
+                        let index = possibleDirections.indexOf(nextDirection);
+                        possibleDirections.splice(index, 1);
+                    }
                 }
             }
         }

@@ -17,23 +17,23 @@ const PopulateGrid = {
         return directions[Math.floor(Math.random() * directions.length)];
     },
     // TODO write more tests for this
-    findNextDirection(grid, position, word) {
-        const failedDirections = [];
-        let remainingDirections = directions;
+    findNextDirection(grid, position, word, directions) {
         // TODO change to forEach
-        for (let i = 0; i <= directions.length; i++) {
-            const candidateDirection = this.getRandomDirection(remainingDirections);
+        while (directions.length > 0) {
+            const candidateDirection = directions[0];
             const directionOK = this.checkDirections(candidateDirection, grid.rows, grid.columns, position, word.length);
             if (directionOK) {
                 return candidateDirection;
+            } else {
+                directions.splice(0, 1);
+                console.log('direction not usable ');
+                console.log('directions updated', directions);
             }
-            failedDirections.push(candidateDirection);
-            remainingDirections = this.getAvailableDirections(failedDirections);
         }
         return false;
     },
-        insertWord(grid, position, direction, word) {
-        console.log('insertWord', word);
+    insertWord(grid, position, direction, word) {
+        console.log('insertWord: ', word, ' location: ', position, 'direction: ', direction);
         const letters = [...word];
         let letterLocations = [];
         let currentPosition = position;
@@ -96,7 +96,7 @@ const PopulateGrid = {
             case 'S':
                 return currentPosition + grid.columns;
             case 'SW':
-                return currentPosition + (grid.columns -1);
+                return currentPosition + (grid.columns - 1);
             case 'W':
                 return currentPosition - 1;
             case 'NW':
@@ -106,6 +106,9 @@ const PopulateGrid = {
     // checks the word does not go outside the grid
     checkDirections(direction, rows, columns, position, wordLen) {
         let wordEnd;
+        let rowEnd;
+        let currentRow;
+        // TODO improve readability of these checks with functional programming
         switch (direction) {
             case 'N':
                 if (position - ((wordLen - 1) * columns) >= 0) {
@@ -113,41 +116,36 @@ const PopulateGrid = {
                 }
                 return false;
             case 'NE':
-                //TODO calculate top & right boundary
-                wordEnd = position - (columns - 1) * (wordLen - 1);
-                // wordEnd = position - ((rows - 1) * (populateGridUtils.currentRow(position, rows) -1));
-                if (wordEnd <= 0) {
+                currentRow = populateGridUtils.currentRow(position, columns);
+                wordEnd = position - ((wordLen - 1) * (columns - 1))
+                rowEnd = ((currentRow - (wordLen - 1)) * columns) - 1;
+                if (wordEnd < 0 || wordEnd > rowEnd) {
                     return false;
                 }
                 return true;
             case 'E':
-                const rowEnd = position - (position % columns) + (columns - 1);
+                rowEnd = position - (position % columns) + (columns - 1);
                 if (position + (wordLen - 1) > rowEnd) {
                     return false;
                 }
                 return true;
             case 'SE':
-                wordEnd = position + (columns + 1) * (wordLen -1)
-                if(wordEnd > columns * rows){
+                currentRow = populateGridUtils.currentRow(position, columns);
+                wordEnd = position + ((wordLen - 1) * (columns + 1));
+                rowEnd = ((currentRow + (wordLen - 1)) * columns) - 1;
+                if (wordEnd > columns * rows || wordEnd > rowEnd) {
                     return false;
                 }
                 return true;
             case 'S':
-                // TODO which way of doing this is better
-                // this is less explicit, but simpler
-                // if (position + ((wordLen - 1) * columns) > (rows * columns) - 1) {
-                //     return false;
-                // }
-                wordEnd = position + ((wordLen - 1) * columns);
-                // const columnEnd = position + ((rows - (Math.floor(position / rows) + 1)) * columns);
-                const columnEnd = position + (populateGridUtils.currentRow(position, rows) * columns);
-                if (wordEnd > columnEnd) {
+                currentRow = populateGridUtils.currentRow(position, columns);
+                if ((currentRow + (wordLen - 1)) > rows) {
                     return false
                 }
                 return true;
             case 'SW':
-                wordLen = position + (columns - 1) * (wordLen -1);
-                if(wordEnd > columns * rows){
+                wordEnd = position + (columns - 1) * (wordLen - 1);
+                if ((position + 1) % columns > 0 || wordEnd >= columns * rows) {
                     return false;
                 }
                 return true;
@@ -160,7 +158,9 @@ const PopulateGrid = {
                 return true;
             case 'NW':
                 wordEnd = position - (columns + 1) * (wordLen - 1);
-                if (wordEnd < 0) {
+                currentRow = populateGridUtils.currentRow(position, columns);
+                let westBoundary = ((currentRow - (wordLen - 1)) * columns) - columns;
+                if (wordEnd < 0 || wordEnd < westBoundary) {
                     return false;
                 }
                 return true;

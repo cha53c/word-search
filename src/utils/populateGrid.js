@@ -1,14 +1,8 @@
 import utils from "./utils";
 import populateGridUtils from "./populateGridUtils";
-// N writes from bottom to top. E writes left to right, S top to bottom, W right to left
-const directions = ['N', 'NE', 'E', 'SE', "S", 'SW', 'W', 'NW'];
 const PopulateGrid = {
     getRandomLocation(gridSize) {
         return Math.floor(Math.random() * gridSize);
-    },
-    getAvailableDirections(failedDirections = []) {
-
-        return directions.filter(d => !failedDirections.includes(d));
     },
     getRandomDirection(directions) {
         if (directions.length === 1) {

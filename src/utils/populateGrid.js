@@ -1,9 +1,6 @@
 import utils from "./utils";
 import populateGridUtils from "./populateGridUtils";
 const PopulateGrid = {
-    getRandomLocation(gridSize) {
-        return Math.floor(Math.random() * gridSize);
-    },
     getRandomDirection(directions) {
         if (directions.length === 1) {
             return directions[0];

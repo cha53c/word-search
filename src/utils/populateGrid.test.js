@@ -205,7 +205,10 @@ describe('findNextDirection', () => {
     describe('insertWord', () => {
         let grid;
         beforeEach(() => {
-            grid = Grid.buildNewGrid(3, 3);
+            // grid = Grid.buildNewGrid(3, 3);
+            grid = gridSetup.createBlankGrid(3, 3);
+            grid = gridSetup.fillBlanks(grid);
+            grid.words = [{word: 'fox', location: [], found: false}];
         });
 
         it('should insert word at start of array', function () {
@@ -217,17 +220,16 @@ describe('findNextDirection', () => {
             expect(grid.letters[2]).toEqual('x');
         });
         it('should return false if there are collisions', function () {
-            const startSate = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
-            grid.locationIndexes = [0, 1, 2];
+            const startState = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
             grid.letters = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
+            grid.words = [{word: 'fox', location: [0, 1, 2], found: false}, {word: 'poo', location: [], found: false}];
             let inserted = PopulateGrid.insertWord(grid, 2, 'S', 'poo');
             expect(inserted).toBeFalsy();
-            expect(grid.letters).toEqual(startSate);
+            expect(grid.letters).toEqual(startState);
         });
         it('should return true if collision but letters match', function () {
-            const startSate = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
+            grid.words = [{word: 'fox', location: [0, 1, 2], found: false}, {word: 'fin', location: [], found: false}];
             const endState = ['f', 'o', 'x', 'i', '-', '-', 'n', '-', '-'];
-            grid.locationIndexes = [0, 1, 2];
             grid.letters = ['f', 'o', 'x', '-', '-', '-', '-', '-', '-'];
             let inserted = PopulateGrid.insertWord(grid, 0, 'S', 'fin');
             expect(inserted).toBeTruthy();
